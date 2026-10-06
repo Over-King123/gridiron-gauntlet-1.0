@@ -6,9 +6,9 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { Server, type Socket } from "socket.io";
 import type { Ack, ClientToServer, LeagueMode, ServerToClient, SessionInfo } from "../shared/types.ts";
-import { loadQuestionBank } from "./questions.ts";
+import { loadDailySets, loadQuestionBank, multiplayerPool } from "./questions.ts";
 import { GameError, Room } from "./room.ts";
-import { Daily, DailyError } from "./daily.ts";
+import { DAILY_CONFIG, Daily, DailyError, dateKey } from "./daily.ts";
 import { createStore } from "./store.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,7 +21,8 @@ const counts = bank.reduce<Record<string, number>>((m, q) => {
   m[k] = (m[k] ?? 0) + 1;
   return m;
 }, {});
-console.log(`Loaded ${bank.length} questions`, counts);
+const dailySets = loadDailySets(path.join(ROOT, "content", "daily"), bank);
+console.log(`Loaded ${bank.length} questions`, counts, `+ ${dailySets.size} dated daily sets`);
 
 const app = express();
 app.set("trust proxy", 1);
@@ -119,7 +120,7 @@ io.on("connection", (socket: GSocket) => {
     handle<{ name: string }>(({ name }) => {
       if (rooms.size > 5000) throw new GameError("Server is full, try again later");
       const code = newCode();
-      const room = new Room(code, bank, broadcast);
+      const room = new Room(code, () => multiplayerPool(bank, dailySets, dateKey(Date.now())), broadcast);
       const p = room.addPlayer(name);
       rooms.set(code, room);
       attach(socket, room, p.id);
@@ -239,13 +240,19 @@ setInterval(() => {
 }, 60_000).unref();
 
 app.get("/healthz", (_req, res) => {
-  res.json({ ok: true, rooms: rooms.size, questions: bank.length, store: store.kind });
+  res.json({
+    ok: true,
+    rooms: rooms.size,
+    questions: bank.length,
+    dailySets: [...dailySets.keys()].slice(-7),
+    store: store.kind,
+  });
 });
 
 // ---------------- Daily mode (HTTP) ----------------
 
 const store = createStore();
-const daily = new Daily(bank, store);
+const daily = new Daily(bank, store, Date.now, DAILY_CONFIG, dailySets);
 console.log(`Daily store: ${store.kind}`);
 
 // simple per-IP limiter for daily writes: 120 requests / minute

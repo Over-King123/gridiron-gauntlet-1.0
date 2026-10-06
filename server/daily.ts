@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import type { Question } from "../shared/types.ts";
 import type { KV } from "./store.ts";
 import { cleanName } from "./room.ts";
+import { isClassic } from "./questions.ts";
 
 // ---------------- configuration ----------------
 
@@ -11,6 +12,8 @@ export const DAILY_CONFIG = {
   epoch: "2026-10-06",
   /** questions per tier, in play order: easy first, deep cuts last */
   mix: [3, 4, 3] as [number, number, number],
+  /** at most this many "classic" (pre-1990) questions per day */
+  maxClassic: 1,
   /** bump to reshuffle the whole schedule */
   seed: "gg-daily-v1",
   ttlSec: 3 * 24 * 3600,
@@ -77,16 +80,18 @@ export interface DailyQuestion {
 export function dailyQuestions(bank: Question[], date: string, cfg = DAILY_CONFIG): DailyQuestion[] {
   const day = dayNumber(date, cfg.epoch);
   const theme = DAILY_THEMES[date];
+  const order = (pool: Question[]) => pool.slice().sort((a, b) => h(cfg.seed + a.id) - h(cfg.seed + b.id) || (a.id < b.id ? -1 : 1));
+  const modern = bank.filter((q) => !isClassic(q));
   const picked: Question[] = [];
   for (let tier = 1; tier <= 3; tier++) {
     const want = cfg.mix[tier - 1];
-    const order = (pool: Question[]) => pool.slice().sort((a, b) => h(cfg.seed + a.id) - h(cfg.seed + b.id) || (a.id < b.id ? -1 : 1));
-    const all = order(bank.filter((q) => q.difficulty === tier));
-    let chosen: Question[] = [];
+    // modern questions only: each day consumes its own slice, so nothing repeats until a tier wraps
+    const all = order(modern.filter((q) => q.difficulty === tier));
+    const chosen: Question[] = [];
     if (theme) {
       const themed = all.filter((q) => q.tags?.includes(theme.tag));
       const start = ((day - 1) * want) % Math.max(1, themed.length);
-      for (let i = 0; i < Math.min(want, themed.length); i++) chosen.push(themed[(start + i) % themed.length]);
+      for (let i = 0; chosen.length < want && i < themed.length; i++) chosen.push(themed[(start + i) % themed.length]);
     }
     const start = ((day - 1) * want) % all.length;
     for (let i = 0; chosen.length < want && i < all.length; i++) {
@@ -94,6 +99,13 @@ export function dailyQuestions(bank: Question[], date: string, cfg = DAILY_CONFI
       if (!chosen.includes(q)) chosen.push(q);
     }
     picked.push(...chosen);
+  }
+  // an old-school sprinkle every third day: swap one same-tier question for a classic
+  const classics = order(bank.filter(isClassic));
+  if (cfg.maxClassic > 0 && classics.length && day % 3 === 0) {
+    const c = classics[Math.floor(day / 3) % classics.length];
+    const slot = picked.findIndex((q) => q.difficulty === c.difficulty);
+    if (slot !== -1) picked[slot] = c;
   }
   return picked.map((q) => withAnswerOrder(q, date));
 }
@@ -162,6 +174,8 @@ export class Daily {
     private kv: KV,
     private now: () => number = Date.now,
     private cfg = DAILY_CONFIG,
+    /** hand-written sets keyed by date (content/daily); used instead of the schedule when present */
+    private sets: Map<string, Question[]> = new Map(),
   ) {}
 
   private today() {
@@ -177,10 +191,11 @@ export class Daily {
     const stored = await this.kv.get(key);
     if (stored) {
       const ids: string[] = JSON.parse(stored);
-      const byId = new Map(this.bank.map((q) => [q.id, q]));
+      const byId = new Map([...this.bank, ...[...this.sets.values()].flat()].map((q) => [q.id, q]));
       if (ids.every((id) => byId.has(id))) return ids.map((id) => withAnswerOrder(byId.get(id)!, date));
     }
-    const qs = dailyQuestions(this.bank, date, this.cfg);
+    const set = this.sets.get(date);
+    const qs = set ? set.map((q) => withAnswerOrder(q, date)) : dailyQuestions(this.bank, date, this.cfg);
     const ids = JSON.stringify(qs.map((x) => x.q.id));
     if (!(await this.kv.setNX(key, ids, this.cfg.ttlSec))) {
       const winner = await this.kv.get(key);

@@ -89,6 +89,14 @@ describe("question selection", () => {
     qs.slice(0, 14).forEach((q) => d[q.difficulty - 1]++);
     expect(d).toEqual([6, 6, 2]);
   });
+  it("caps classic questions per game", () => {
+    const bank = makeBank().map((q, i) => (i % 2 ? { ...q, tags: ["classic"] } : q));
+    for (let k = 0; k < 20; k++) {
+      const qs = selectQuestions(bank, "MIXED", new Set(), Math.random);
+      expect(qs.filter((q) => q.tags?.includes("classic")).length).toBeLessThanOrEqual(2);
+      expect(qs).toHaveLength(15);
+    }
+  });
   it("balances MIXED and avoids used questions", () => {
     const bank = makeBank();
     const used = new Set(bank.filter((q) => q.difficulty === 1).slice(0, 6).map((q) => q.id));

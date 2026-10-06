@@ -64,6 +64,8 @@ export function shuffle<T>(arr: T[], rng: Rng): T[] {
  * the final question is the hardest available tier. Questions in `used` are
  * avoided while enough fresh ones remain.
  */
+export const isClassic = (q: Question) => !!q.tags?.includes("classic");
+
 export function selectQuestions(
   bank: Question[],
   mode: LeagueMode,
@@ -71,6 +73,7 @@ export function selectQuestions(
   rng: Rng,
   total = GAME_CONFIG.questionsPerGame,
   mix = GAME_CONFIG.regularMix,
+  maxClassic = GAME_CONFIG.maxClassicPerGame,
 ): Question[] {
   const leagues: League[] = mode === "MIXED" ? ["NFL", "FBS"] : [mode];
   const eligible = bank.filter((q) => leagues.includes(q.league));
@@ -80,8 +83,9 @@ export function selectQuestions(
   const pickedIds = new Set<string>();
 
   // take n from a filtered pool, fresh first, then previously-used, balancing leagues in MIXED
+  let classics = 0;
   const take = (filter: (q: Question) => boolean, n: number) => {
-    const pool = eligible.filter((q) => filter(q) && !pickedIds.has(q.id));
+    const pool = eligible.filter((q) => filter(q) && !pickedIds.has(q.id) && (!isClassic(q) || classics < maxClassic));
     const fresh = shuffle(pool.filter((q) => !used.has(q.id)), rng);
     const stale = shuffle(pool.filter((q) => used.has(q.id)), rng);
     const ordered = [...fresh, ...stale];
@@ -99,8 +103,18 @@ export function selectQuestions(
     } else {
       out.push(...ordered.slice(0, n));
     }
-    for (const q of out) pickedIds.add(q.id);
-    return out;
+    // enforce the classic cap within this batch too
+    const capped: Question[] = [];
+    for (const q of out) {
+      if (isClassic(q)) {
+        if (classics >= maxClassic) continue;
+        classics++;
+      }
+      capped.push(q);
+      pickedIds.add(q.id);
+    }
+    if (capped.length < out.length && capped.length < n) capped.push(...take((q) => filter(q) && !isClassic(q), n - capped.length));
+    return capped;
   };
 
   // final question: hardest tier available
@@ -125,4 +139,74 @@ export function selectQuestions(
     .sort((a, b) => a.key - b.key)
     .map((x) => x.q);
   return [...ordered, finalQ];
+}
+
+// ---------------- dated Daily sets (content/daily/YYYY-MM-DD.json) ----------------
+
+export const DAILY_MIX = [3, 4, 3] as const;
+
+const norm = (t: string) => t.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+function similarity(a: string, b: string) {
+  const A = new Set(norm(a).split(" ").filter((w) => w.length > 3));
+  const B = new Set(norm(b).split(" ").filter((w) => w.length > 3));
+  // too few meaningful words to judge overlap; only exact matches count
+  if (Math.min(A.size, B.size) < 4) return 0;
+  let both = 0;
+  for (const w of A) if (B.has(w)) both++;
+  return both / Math.min(A.size, B.size);
+}
+
+/** Problems with one day's hand-written set: shape, mix, classic cap, duplicates of earlier questions. */
+export function validateDailySet(date: string, set: Question[], others: Question[]): string[] {
+  const errs: string[] = [];
+  if (set.length !== 10) errs.push(`${date}: needs exactly 10 questions, has ${set.length}`);
+  const tiers = [1, 2, 3].map((d) => set.filter((q) => q.difficulty === d).length);
+  if (tiers.join() !== DAILY_MIX.join()) errs.push(`${date}: difficulty mix ${tiers.join("/")} should be ${DAILY_MIX.join("/")}`);
+  if (set.filter(isClassic).length > 1) errs.push(`${date}: more than one classic question`);
+  const leagues = new Set(set.map((q) => q.league));
+  if (leagues.size < 2) errs.push(`${date}: should mix NFL and FBS`);
+  for (const q of set) {
+    for (const o of others) {
+      if (o.id === q.id) continue;
+      if (norm(o.question) === norm(q.question) || similarity(o.question, q.question) >= 0.8)
+        errs.push(`${date} ${q.id}: too similar to ${o.id} ("${o.question.slice(0, 60)}")`);
+    }
+  }
+  return errs;
+}
+
+/** Load content/daily/*.json. Throws if any file is invalid. */
+export function loadDailySets(dir: string, base: Question[]): Map<string, Question[]> {
+  const sets = new Map<string, Question[]>();
+  if (!fs.existsSync(dir)) return sets;
+  const ids = new Set(base.map((q) => q.id));
+  const problems: string[] = [];
+  const all: Question[] = [...base];
+  for (const f of fs.readdirSync(dir).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort()) {
+    const date = f.slice(0, 10);
+    const raw = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+    if (!Array.isArray(raw)) {
+      problems.push(`${f}: expected an array`);
+      continue;
+    }
+    for (const q of raw) {
+      const errs = validateQuestion(q);
+      if (ids.has(q?.id)) errs.push("duplicate id");
+      if (errs.length) problems.push(`${f} ${q?.id ?? "?"}: ${errs.join(", ")}`);
+      ids.add(q?.id);
+    }
+    problems.push(...validateDailySet(date, raw, all));
+    all.push(...raw);
+    // play order: easy -> hard
+    sets.set(date, (raw as Question[]).slice().sort((a, b) => a.difficulty - b.difficulty));
+  }
+  if (problems.length) throw new Error("Invalid daily sets:\n" + problems.join("\n"));
+  return sets;
+}
+
+/** Everything multiplayer may draw from: the base bank plus Daily sets from days already past. */
+export function multiplayerPool(base: Question[], sets: Map<string, Question[]>, today: string): Question[] {
+  const out = base.slice();
+  for (const [date, qs] of sets) if (date < today) out.push(...qs);
+  return out;
 }

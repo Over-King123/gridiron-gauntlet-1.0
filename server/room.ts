@@ -75,7 +75,7 @@ export class Room {
 
   constructor(
     code: string,
-    private bank: Question[],
+    private bank: Question[] | (() => Question[]),
     private onChange: (room: Room) => void,
     private clock: Clock = realClock,
     private rng: Rng = Math.random,
@@ -192,7 +192,8 @@ export class Room {
     if (this.phase !== "lobby") throw new GameError("Game already started");
     if (this.connectedCount() < this.cfg.minPlayersToStart)
       throw new GameError(`Need at least ${this.cfg.minPlayersToStart} players`);
-    this.questions = selectQuestions(this.bank, this.league, this.usedQuestionIds, this.rng, this.cfg.questionsPerGame);
+    const bank = typeof this.bank === "function" ? this.bank() : this.bank;
+    this.questions = selectQuestions(bank, this.league, this.usedQuestionIds, this.rng, this.cfg.questionsPerGame);
     for (const q of this.questions) this.usedQuestionIds.add(q.id);
     for (const p of this.players.values()) {
       p.score = 0;

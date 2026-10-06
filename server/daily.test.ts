@@ -1,7 +1,7 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { Daily, dailyQuestions, dateKey, dayNumber, msUntilReset } from "./daily.ts";
-import { loadQuestionBank } from "./questions.ts";
+import { isClassic, loadQuestionBank, validateDailySet } from "./questions.ts";
 import { MemoryKV } from "./store.ts";
 
 const bank = loadQuestionBank(path.resolve("content/questions"));
@@ -31,8 +31,8 @@ describe("daily schedule", () => {
   });
   it("doesn't repeat questions across consecutive days", () => {
     const seen = new Set<string>();
-    // 14 straight days with no repeats across all tiers
-    for (let d = 0; d < 14; d++) {
+    // 9 straight days of fallback schedule with no repeats
+    for (let d = 0; d < 9; d++) {
       const date = new Date(Date.parse("2026-10-06T12:00:00Z") + d * 86_400_000).toISOString().slice(0, 10);
       for (const x of dailyQuestions(bank, date)) {
         expect(seen.has(x.q.id), `${x.q.id} repeated on ${date}`).toBe(false);
@@ -120,5 +120,40 @@ describe("daily attempts", () => {
     const later = new Daily([...bank, ...extra], kv, () => T);
     const again = await later.start(DEV);
     expect(again.current!.question).toBe(lockedQ);
+  });
+});
+
+describe("classics and dated sets", () => {
+  it("never puts more than one classic question in a fallback daily", () => {
+    for (let d = 0; d < 60; d++) {
+      const date = new Date(Date.parse("2026-10-06T12:00:00Z") + d * 86_400_000).toISOString().slice(0, 10);
+      expect(dailyQuestions(bank, date).filter((x) => isClassic(x.q)).length).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("uses a dated set when one exists, in easy-to-hard order", async () => {
+    const mk = (i: number, d: 1 | 2 | 3, league: "NFL" | "FBS") => ({
+      id: `d-test-${i}`,
+      league,
+      category: "test",
+      difficulty: d,
+      question: `Brand new player question number ${i} about someone?`,
+      answers: ["Right", "Wrong A", "Wrong B", "Wrong C"] as [string, string, string, string],
+      correctIndex: 0 as const,
+      explanation: "x",
+    });
+    const set = [3, 3, 3, 2, 2, 2, 2, 1, 1, 1].map((d, i) => mk(i, d as 1 | 2 | 3, i % 2 ? "NFL" : "FBS"));
+    expect(validateDailySet("2026-10-07", set, bank)).toEqual([]);
+    const sorted = set.slice().sort((a, b) => a.difficulty - b.difficulty);
+    const daily = new Daily(bank, new MemoryKV(() => T), () => T, undefined, new Map([["2026-10-07", sorted]]));
+    const s = await daily.start(DEV);
+    expect(s.current!.question).toBe(sorted[0].question);
+  });
+
+  it("flags bad dated sets: wrong mix, duplicates of existing questions", () => {
+    const dup = { ...bank[0], id: "d-dup" };
+    const errs = validateDailySet("2026-10-07", [dup], bank);
+    expect(errs.join(" ")).toMatch(/exactly 10/);
+    expect(errs.join(" ")).toMatch(/too similar/);
   });
 });

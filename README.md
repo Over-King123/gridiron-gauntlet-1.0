@@ -12,8 +12,11 @@ Real-time multiplayer football trivia for 2–8 players. Players join from their
 ## Daily Gauntlet (single player)
 
 - Same 10 questions for everyone each day, NFL and FBS mixed, ordered 3 / 4 / 3 by difficulty. No category labels, no timer.
+- Each day's 10 questions are locked in storage the first time that day is opened, so a mid-day deploy never changes them.
 - Day boundary is midnight `America/Chicago`; Daily #1 is 2026-10-06 (`server/daily.ts`, `DAILY_CONFIG`).
-- Questions follow a fixed shuffled schedule per difficulty tier, so nothing repeats until a tier is used up (about 17 days with the current deep-cut pool; add questions to extend it).
+- **Fresh questions every day:** a nightly scheduled task writes 10 new, fact-checked questions to `content/daily/<date>.json` (rules in `NIGHTLY.md`). When a dated set exists it's used for that day; past sets join the multiplayer pool.
+- At most one "classic" (pre-1990, tagged `classic`) question per daily, two per multiplayer game.
+- If a day has no dated set, questions follow a fixed shuffled schedule per difficulty tier, so nothing repeats until a tier is used up (about 17 days with the current deep-cut pool; add questions to extend it).
 - One attempt per device per day. Score is X/10; ties go to the faster total time, measured on the server.
 - Daily board shows everyone who posted a name, and starts empty each day.
 - Themed days: add a date and tag to `DAILY_THEMES` in `server/daily.ts` and tag questions (e.g. `"tags": ["SEC"]`).

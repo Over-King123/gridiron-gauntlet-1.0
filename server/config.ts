@@ -15,6 +15,8 @@ export const GAME_CONFIG = {
   hostGraceMs: 10_000,
   /** difficulty mix for the 14 regular questions: [d1, d2, d3] */
   regularMix: [6, 6, 2] as [number, number, number],
+  /** questions tagged "classic" (pre-1990) allowed per multiplayer game */
+  maxClassicPerGame: 2,
   nameMaxLength: 16,
 };
 
