@@ -8,6 +8,8 @@ import { Server, type Socket } from "socket.io";
 import type { Ack, ClientToServer, LeagueMode, ServerToClient, SessionInfo } from "../shared/types.ts";
 import { loadQuestionBank } from "./questions.ts";
 import { GameError, Room } from "./room.ts";
+import { Daily, DailyError } from "./daily.ts";
+import { createStore } from "./store.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -22,6 +24,7 @@ const counts = bank.reduce<Record<string, number>>((m, q) => {
 console.log(`Loaded ${bank.length} questions`, counts);
 
 const app = express();
+app.set("trust proxy", 1);
 const server = http.createServer(app);
 
 interface SocketData {
@@ -236,8 +239,54 @@ setInterval(() => {
 }, 60_000).unref();
 
 app.get("/healthz", (_req, res) => {
-  res.json({ ok: true, rooms: rooms.size, questions: bank.length });
+  res.json({ ok: true, rooms: rooms.size, questions: bank.length, store: store.kind });
 });
+
+// ---------------- Daily mode (HTTP) ----------------
+
+const store = createStore();
+const daily = new Daily(bank, store);
+console.log(`Daily store: ${store.kind}`);
+
+// simple per-IP limiter for daily writes: 120 requests / minute
+const hits = new Map<string, { n: number; reset: number }>();
+setInterval(() => hits.clear(), 10 * 60_000).unref();
+const limit: express.RequestHandler = (req, res, next) => {
+  const ip = (req.headers["x-forwarded-for"] as string | undefined)?.split(",")[0].trim() || req.ip || "?";
+  const now = Date.now();
+  const h = hits.get(ip);
+  if (!h || h.reset < now) hits.set(ip, { n: 1, reset: now + 60_000 });
+  else if (++h.n > 120) return void res.status(429).json({ ok: false, error: "Slow down a little" });
+  next();
+};
+
+const api = express.Router();
+api.use(express.json({ limit: "4kb" }));
+api.use(limit);
+const route =
+  (fn: (req: express.Request) => Promise<unknown>): express.RequestHandler =>
+  async (req, res) => {
+    try {
+      res.set("Cache-Control", "no-store");
+      res.json({ ok: true, data: await fn(req) });
+    } catch (e) {
+      if (e instanceof DailyError) res.status(400).json({ ok: false, error: e.message });
+      else {
+        console.error(e);
+        res.status(500).json({ ok: false, error: "Something went wrong" });
+      }
+    }
+  };
+
+api.post("/daily/start", route((req) => daily.start(req.body?.deviceId)));
+api.post("/daily/state", route((req) => daily.get(req.body?.date, req.body?.attemptId)));
+api.post("/daily/answer", route((req) => daily.answer(req.body?.date, req.body?.attemptId, Number(req.body?.index), Number(req.body?.choice))));
+api.post("/daily/name", route((req) => daily.submitName(req.body?.date, req.body?.attemptId, req.body?.name)));
+api.get(
+  "/daily/leaderboard",
+  route((req) => daily.leaderboard(req.query.date as string | undefined, req.query.attemptId as string | undefined)),
+);
+app.use("/api", api);
 
 const clientDir = path.join(ROOT, "dist", "client");
 if (fs.existsSync(clientDir)) {

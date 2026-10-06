@@ -43,7 +43,7 @@ function onState(bot: Bot, s: RoomSnapshot) {
 
 async function main() {
   const t0 = Date.now();
-  const bots: Bot[] = Array.from({ length: N }, (_, i) => ({ name: `Bot${i}`, questionsSeen: [], points: 0 }) as Bot);
+  const bots: Bot[] = Array.from({ length: N }, (_, i) => ({ name: `Bot${i}`, questionsSeen: [], points: 0 }) as unknown as Bot);
   bots.forEach(connect);
   await sleep(500);
 

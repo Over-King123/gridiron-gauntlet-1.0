@@ -1,12 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { LeagueMode, PublicPlayer, RoomSnapshot } from "../shared/types.ts";
 import { actions, useCountdown, useStore } from "./game.ts";
+import { DailyApp } from "./Daily.tsx";
 
 const LEAGUE_LABEL: Record<LeagueMode, string> = { NFL: "NFL", FBS: "College (FBS)", MIXED: "Mixed" };
 const LETTERS = ["A", "B", "C", "D"];
 
 export function App() {
   const { room, connected, resuming, notice } = useStore();
+  const [daily, setDaily] = useState(() => /^\/daily\/?$/i.test(location.pathname));
+  const openDaily = (on: boolean) => {
+    setDaily(on);
+    history.replaceState(null, "", on ? "/daily" : "/");
+  };
   const initialCode = useMemo(() => {
     const m = location.pathname.match(/^\/([A-Za-z]{4})\/?$/) ?? location.search.match(/[?&]code=([A-Za-z]{4})/);
     return m ? m[1].toUpperCase() : "";
@@ -14,7 +20,8 @@ export function App() {
 
   let body: React.ReactNode;
   if (resuming) body = <Splash text="Rejoining your game…" />;
-  else if (!room) body = <Entry initialCode={initialCode} />;
+  else if (!room && daily) body = <DailyApp onExit={() => openDaily(false)} logo={<Logo small />} />;
+  else if (!room) body = <Entry initialCode={initialCode} onDaily={() => openDaily(true)} />;
   else if (room.phase === "lobby") body = <Lobby room={room} />;
   else if (room.phase === "question" || room.phase === "reveal") body = <QuestionScreen room={room} />;
   else if (room.phase === "leaderboard") body = <Leaderboard room={room} />;
@@ -53,7 +60,7 @@ function Logo({ small }: { small?: boolean }) {
 
 // ---------------- landing / create / join ----------------
 
-function Entry({ initialCode }: { initialCode: string }) {
+function Entry({ initialCode, onDaily }: { initialCode: string; onDaily: () => void }) {
   const [mode, setMode] = useState<"home" | "create" | "join">(initialCode ? "join" : "home");
   const [name, setName] = useState(() => localStorage.getItem("gg-name") ?? "");
   const [code, setCode] = useState(initialCode);
@@ -86,14 +93,23 @@ function Entry({ initialCode }: { initialCode: string }) {
         <Logo />
         <p className="tagline">Football trivia for people who actually know ball.</p>
         <div className="stack wide">
-          <button className="btn primary big" onClick={() => setMode("create")}>
-            Create a game
+          <button className="btn primary big daily-cta" onClick={onDaily}>
+            <span>Daily Gauntlet</span>
+            <small>10 questions · one shot · today's board</small>
           </button>
-          <button className="btn ghost big" onClick={() => setMode("join")}>
-            Join with a code
-          </button>
+          <div className="divider">
+            <span>or play with friends</span>
+          </div>
+          <div className="pair">
+            <button className="btn ghost" onClick={() => setMode("create")}>
+              Create a room
+            </button>
+            <button className="btn ghost" onClick={() => setMode("join")}>
+              Join with code
+            </button>
+          </div>
         </div>
-        <p className="fine">2–8 players · 15 questions · no account needed</p>
+        <p className="fine">Multiplayer: 2–8 players · 15 questions · no account needed</p>
       </main>
     );
 
@@ -284,10 +300,7 @@ function QuestionScreen({ room }: { room: RoomSnapshot }) {
           Q{q.number}
           <span className="muted">/{q.total}</span>
         </span>
-        <span className="chips">
-          <span className="chip">{q.league}</span>
-          <span className="chip dim">{q.category}</span>
-        </span>
+        <span className="spacer" />
         <Clock frac={frac} seconds={seconds} done={!!reveal} />
       </header>
 
