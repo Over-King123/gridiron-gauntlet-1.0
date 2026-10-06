@@ -11,9 +11,9 @@ Real-time multiplayer football trivia for 2–8 players. Players join from their
 
 ## Daily Gauntlet (single player)
 
-- Same 10 questions for everyone each day, NFL and FBS mixed, ordered 5 / 3 / 2 by difficulty. No category labels, no timer.
+- Same 10 questions for everyone each day, NFL and FBS mixed, ordered 3 / 4 / 3 by difficulty. No category labels, no timer.
 - Day boundary is midnight `America/Chicago`; Daily #1 is 2026-10-06 (`server/daily.ts`, `DAILY_CONFIG`).
-- Questions follow a fixed shuffled schedule per difficulty tier, so nothing repeats until a tier is used up (about 2 weeks with the current deep-cut pool; add questions to extend it).
+- Questions follow a fixed shuffled schedule per difficulty tier, so nothing repeats until a tier is used up (about 17 days with the current deep-cut pool; add questions to extend it).
 - One attempt per device per day. Score is X/10; ties go to the faster total time, measured on the server.
 - Daily board shows everyone who posted a name, and starts empty each day.
 - Themed days: add a date and tag to `DAILY_THEMES` in `server/daily.ts` and tag questions (e.g. `"tags": ["SEC"]`).
@@ -46,7 +46,7 @@ Question data lives in `content/questions/*.json`, separate from the engine. Eve
 }
 ```
 
-Difficulty: 1 = knowledgeable fan, 2 = serious fan, 3 = deep cut. Answer order is shuffled by the server each game, so `correctIndex` can always be 0. Each game draws 9/4/1 from tiers 1/2/3 plus a tier-3 final, and avoids repeats within a room.
+Difficulty: 1 = knowledgeable fan, 2 = serious fan, 3 = deep cut. Answer order is shuffled by the server each game, so `correctIndex` can always be 0. Each game draws 6/6/2 from tiers 1/2/3 plus a tier-3 final, and avoids repeats within a room.
 
 Drop new JSON files in the folder to add packs. `npm run validate` checks them; the server also refuses to start on an invalid question.
 

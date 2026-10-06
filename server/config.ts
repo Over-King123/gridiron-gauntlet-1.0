@@ -14,7 +14,7 @@ export const GAME_CONFIG = {
   /** how long a disconnected host keeps host status before it moves */
   hostGraceMs: 10_000,
   /** difficulty mix for the 14 regular questions: [d1, d2, d3] */
-  regularMix: [9, 4, 1] as [number, number, number],
+  regularMix: [6, 6, 2] as [number, number, number],
   nameMaxLength: 16,
 };
 

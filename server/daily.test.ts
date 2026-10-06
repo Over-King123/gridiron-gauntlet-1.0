@@ -26,12 +26,12 @@ describe("daily schedule", () => {
     expect(a.map((x) => x.q.id)).toEqual(b.map((x) => x.q.id));
     expect(a.map((x) => x.answers)).toEqual(b.map((x) => x.answers));
     expect(a).toHaveLength(10);
-    expect(a.map((x) => x.q.difficulty)).toEqual([1, 1, 1, 1, 1, 2, 2, 2, 3, 3]);
+    expect(a.map((x) => x.q.difficulty)).toEqual([1, 1, 1, 2, 2, 2, 2, 3, 3, 3]);
     for (const x of a) expect(x.answers[x.correctIndex]).toBe(x.q.answers[x.q.correctIndex]);
   });
   it("doesn't repeat questions across consecutive days", () => {
     const seen = new Set<string>();
-    // deep-cut tier is the smallest: 28 questions / 2 per day = 14 days
+    // 14 straight days with no repeats across all tiers
     for (let d = 0; d < 14; d++) {
       const date = new Date(Date.parse("2026-10-06T12:00:00Z") + d * 86_400_000).toISOString().slice(0, 10);
       for (const x of dailyQuestions(bank, date)) {
@@ -108,5 +108,17 @@ describe("daily attempts", () => {
     expect(tomorrow.entries).toHaveLength(0);
     const s2 = await daily.start("dev-aaaaaaaaaaaaaaaa");
     expect(s2.finished).toBe(false); // new day, new attempt
+  });
+
+  it("locks the day's questions even if the bank changes mid-day", async () => {
+    const kv = new MemoryKV(() => T);
+    const first = new Daily(bank, kv, () => T);
+    const s = await first.start(DEV);
+    const lockedQ = s.current!.question;
+    // simulate a mid-day deploy that adds questions, which reshuffles the computed schedule
+    const extra = Array.from({ length: 40 }, (_, i) => ({ ...bank[0], id: `zz-new-${i}`, difficulty: ((i % 3) + 1) as 1 | 2 | 3, question: `New question ${i}?` }));
+    const later = new Daily([...bank, ...extra], kv, () => T);
+    const again = await later.start(DEV);
+    expect(again.current!.question).toBe(lockedQ);
   });
 });

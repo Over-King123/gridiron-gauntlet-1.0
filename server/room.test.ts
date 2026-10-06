@@ -87,7 +87,7 @@ describe("question selection", () => {
     expect(qs[14].difficulty).toBe(3);
     const d = [0, 0, 0];
     qs.slice(0, 14).forEach((q) => d[q.difficulty - 1]++);
-    expect(d).toEqual([9, 4, 1]);
+    expect(d).toEqual([6, 6, 2]);
   });
   it("balances MIXED and avoids used questions", () => {
     const bank = makeBank();

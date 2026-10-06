@@ -10,7 +10,7 @@ export const DAILY_CONFIG = {
   /** Daily #1 */
   epoch: "2026-10-06",
   /** questions per tier, in play order: easy first, deep cuts last */
-  mix: [5, 3, 2] as [number, number, number],
+  mix: [3, 4, 3] as [number, number, number],
   /** bump to reshuffle the whole schedule */
   seed: "gg-daily-v1",
   ttlSec: 3 * 24 * 3600,
@@ -95,10 +95,12 @@ export function dailyQuestions(bank: Question[], date: string, cfg = DAILY_CONFI
     }
     picked.push(...chosen);
   }
-  return picked.map((q) => {
-    const order = [0, 1, 2, 3].sort((a, b) => h(`${date}:${q.id}:${a}`) - h(`${date}:${q.id}:${b}`));
-    return { q, answers: order.map((i) => q.answers[i]), correctIndex: order.indexOf(q.correctIndex) };
-  });
+  return picked.map((q) => withAnswerOrder(q, date));
+}
+
+function withAnswerOrder(q: Question, date: string): DailyQuestion {
+  const order = [0, 1, 2, 3].sort((a, b) => h(`${date}:${q.id}:${a}`) - h(`${date}:${q.id}:${b}`));
+  return { q, answers: order.map((i) => q.answers[i]), correctIndex: order.indexOf(q.correctIndex) };
 }
 
 // ---------------- attempts + leaderboard ----------------
@@ -151,6 +153,7 @@ const k = {
   device: (date: string, dev: string) => `gg:daily:${date}:device:${dev}`,
   board: (date: string) => `gg:daily:${date}:board`,
   plays: (date: string) => `gg:daily:${date}:plays`,
+  qids: (date: string) => `gg:daily:${date}:qids`,
 };
 
 export class Daily {
@@ -165,8 +168,25 @@ export class Daily {
     return dateKey(this.now(), this.cfg.timeZone);
   }
 
-  private questionsFor(date: string) {
-    return dailyQuestions(this.bank, date, this.cfg);
+  /**
+   * The day's 10 question ids are locked in storage the first time that day is requested,
+   * so pushing question changes mid-day never swaps questions under someone mid-attempt.
+   */
+  private async questionsFor(date: string): Promise<DailyQuestion[]> {
+    const key = k.qids(date);
+    const stored = await this.kv.get(key);
+    if (stored) {
+      const ids: string[] = JSON.parse(stored);
+      const byId = new Map(this.bank.map((q) => [q.id, q]));
+      if (ids.every((id) => byId.has(id))) return ids.map((id) => withAnswerOrder(byId.get(id)!, date));
+    }
+    const qs = dailyQuestions(this.bank, date, this.cfg);
+    const ids = JSON.stringify(qs.map((x) => x.q.id));
+    if (!(await this.kv.setNX(key, ids, this.cfg.ttlSec))) {
+      const winner = await this.kv.get(key);
+      if (winner && winner !== ids) return this.questionsFor(date);
+    }
+    return qs;
   }
 
   private async load(date: string, id: string): Promise<Attempt> {
@@ -179,8 +199,8 @@ export class Daily {
     await this.kv.set(k.attempt(a.date, a.id), JSON.stringify(a), this.cfg.ttlSec);
   }
 
-  private view(a: Attempt): DailyState {
-    const qs = this.questionsFor(a.date);
+  private async view(a: Attempt): Promise<DailyState> {
+    const qs = await this.questionsFor(a.date);
     const i = a.marks.length;
     const cur = !a.finishedAt && qs[i] ? { index: i, question: qs[i].q.question, answers: qs[i].answers } : null;
     return {
@@ -239,7 +259,7 @@ export class Daily {
     if (a.finishedAt) throw new DailyError("You've already finished today's Gauntlet");
     if (index !== a.marks.length) throw new DailyError("That question is already answered");
     if (!Number.isInteger(choice) || choice < 0 || choice > 3) throw new DailyError("Invalid answer");
-    const qs = this.questionsFor(a.date);
+    const qs = await this.questionsFor(a.date);
     const q = qs[index];
     const correct = choice === q.correctIndex;
     a.marks.push(correct ? 1 : 0);
