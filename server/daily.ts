@@ -161,11 +161,11 @@ export interface DailyState {
 }
 
 const k = {
-  attempt: (date: string, id: string) => `gg:daily:${date}:attempt:${id}`,
-  device: (date: string, dev: string) => `gg:daily:${date}:device:${dev}`,
-  board: (date: string) => `gg:daily:${date}:board`,
-  plays: (date: string) => `gg:daily:${date}:plays`,
-  qids: (date: string) => `gg:daily:${date}:qids`,
+  attempt: (date: string, id: string) => `gg:daily2:${date}:attempt:${id}`,
+  device: (date: string, dev: string) => `gg:daily2:${date}:device:${dev}`,
+  board: (date: string) => `gg:daily2:${date}:board`,
+  plays: (date: string) => `gg:daily2:${date}:plays`,
+  qids: (date: string) => `gg:daily2:${date}:qids`,
 };
 
 export class Daily {
@@ -188,19 +188,23 @@ export class Daily {
    */
   private async questionsFor(date: string): Promise<DailyQuestion[]> {
     const key = k.qids(date);
-    const stored = await this.kv.get(key);
-    if (stored) {
-      const ids: string[] = JSON.parse(stored);
-      const byId = new Map([...this.bank, ...[...this.sets.values()].flat()].map((q) => [q.id, q]));
-      if (ids.every((id) => byId.has(id))) return ids.map((id) => withAnswerOrder(byId.get(id)!, date));
-    }
+    const byId = new Map([...this.bank, ...[...this.sets.values()].flat()].map((q) => [q.id, q]));
+    const fromIds = (raw: string | null) => {
+      if (!raw) return null;
+      const ids: string[] = JSON.parse(raw);
+      return ids.length && ids.every((id) => byId.has(id)) ? ids.map((id) => withAnswerOrder(byId.get(id)!, date)) : null;
+    };
+    const locked = fromIds(await this.kv.get(key));
+    if (locked) return locked;
+
     const set = this.sets.get(date);
     const qs = set ? set.map((q) => withAnswerOrder(q, date)) : dailyQuestions(this.bank, date, this.cfg);
     const ids = JSON.stringify(qs.map((x) => x.q.id));
-    if (!(await this.kv.setNX(key, ids, this.cfg.ttlSec))) {
-      const winner = await this.kv.get(key);
-      if (winner && winner !== ids) return this.questionsFor(date);
-    }
+    if (await this.kv.setNX(key, ids, this.cfg.ttlSec)) return qs;
+    // someone else locked first: use theirs if it's valid, otherwise replace a stale lock
+    const winner = fromIds(await this.kv.get(key));
+    if (winner) return winner;
+    await this.kv.set(key, ids, this.cfg.ttlSec);
     return qs;
   }
 

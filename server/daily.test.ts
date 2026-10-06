@@ -157,3 +157,14 @@ describe("classics and dated sets", () => {
     expect(errs.join(" ")).toMatch(/too similar/);
   });
 });
+
+describe("stale locks", () => {
+  it("replaces a lock that points at questions no longer in the bank", async () => {
+    const kv = new MemoryKV(() => T);
+    await kv.set("gg:daily2:2026-10-07:qids", JSON.stringify(["gone-1", "gone-2"]), 3600);
+    const daily = new Daily(bank, kv, () => T);
+    const s = await daily.start(DEV);
+    expect(s.current).not.toBeNull();
+    expect(s.total).toBe(10);
+  });
+});

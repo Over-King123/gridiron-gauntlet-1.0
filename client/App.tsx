@@ -91,25 +91,25 @@ function Entry({ initialCode, onDaily }: { initialCode: string; onDaily: () => v
     return (
       <main className="screen center">
         <Logo />
-        <p className="tagline">Football trivia for people who actually know ball.</p>
+        <p className="tagline">NFL and college football trivia</p>
         <div className="stack wide">
           <button className="btn primary big daily-cta" onClick={onDaily}>
             <span>Daily Gauntlet</span>
-            <small>10 questions · one shot · today's board</small>
+            <small>10 questions · new every day</small>
           </button>
           <div className="divider">
-            <span>or play with friends</span>
+            <span>Multiplayer</span>
           </div>
           <div className="pair">
             <button className="btn ghost" onClick={() => setMode("create")}>
-              Create a room
+              Create room
             </button>
             <button className="btn ghost" onClick={() => setMode("join")}>
-              Join with code
+              Join room
             </button>
           </div>
         </div>
-        <p className="fine">Multiplayer: 2–8 players · 15 questions · no account needed</p>
+
       </main>
     );
 
@@ -139,7 +139,7 @@ function Entry({ initialCode, onDaily }: { initialCode: string; onDaily: () => v
             className="input"
             value={name}
             onChange={(e) => setName(e.target.value.slice(0, 16))}
-            placeholder="e.g. Coach K"
+            placeholder="Display name"
             maxLength={16}
             autoComplete="nickname"
             autoFocus={mode === "create" || !!initialCode}
@@ -150,7 +150,7 @@ function Entry({ initialCode, onDaily }: { initialCode: string; onDaily: () => v
           {busy ? "…" : mode === "create" ? "Create room" : "Join room"}
         </button>
         <button type="button" className="btn link" onClick={() => (setMode("home"), setErr(""))}>
-          ← Back
+          Back
         </button>
       </form>
     </main>
@@ -191,7 +191,7 @@ function Lobby({ room }: { room: RoomSnapshot }) {
         <span className="label">Room code</span>
         <span className="room-code">{room.code}</span>
         <button className="btn ghost small" onClick={share}>
-          {copied ? "Link copied" : "Share invite link"}
+          {copied ? "Link copied" : "Copy invite link"}
         </button>
       </section>
 
@@ -218,11 +218,11 @@ function Lobby({ room }: { room: RoomSnapshot }) {
             </li>
           ))}
         </ul>
-        {room.players.length < 2 && <p className="muted center-text">Waiting for at least one more player…</p>}
+        {room.players.length < 2 && <p className="muted center-text">At least 2 players needed</p>}
       </section>
 
       <section className="card">
-        <h3>Trivia</h3>
+        <h3>League</h3>
         <div className="segmented">
           {(["NFL", "FBS", "MIXED"] as LeagueMode[]).map((l) => (
             <button
@@ -235,17 +235,17 @@ function Lobby({ room }: { room: RoomSnapshot }) {
             </button>
           ))}
         </div>
-        {!isHost && <p className="muted small-text">The host picks the league.</p>}
+        {!isHost && <p className="muted small-text">Selected by host</p>}
       </section>
 
       {err && <p className="error">{err}</p>}
       <div className="footer-action">
         {isHost ? (
           <button className="btn primary big" disabled={online < 2} onClick={() => run(actions.start())}>
-            {online < 2 ? "Need 2+ players" : `Kick off · ${online} players`}
+            {online < 2 ? "Waiting for players" : `Start game · ${online} players`}
           </button>
         ) : (
-          <p className="waiting">Waiting for the host to kick off…</p>
+          <p className="waiting">Waiting for host to start</p>
         )}
       </div>
     </main>
@@ -344,7 +344,7 @@ function QuestionScreen({ room }: { room: RoomSnapshot }) {
             ) : mine?.choice == null ? (
               <span>No answer</span>
             ) : (
-              <span>Wrong</span>
+              <span>Incorrect</span>
             )}
           </div>
           <p className="explain">{reveal.explanation}</p>
@@ -437,7 +437,7 @@ function Leaderboard({ room }: { room: RoomSnapshot }) {
       </header>
       <Standings room={room} highlightDeltas />
       <p className={nextIsFinal ? "up-next final" : "up-next"}>
-        {nextIsFinal ? "Next: FINAL QUESTION · 3× points" : `Next: question ${q.number + 1}`}
+        {nextIsFinal ? "Next: Final question · 3× points" : `Next: Question ${q.number + 1}`}
       </p>
     </main>
   );
@@ -455,8 +455,7 @@ function Final({ room }: { room: RoomSnapshot }) {
   return (
     <main className="screen">
       <section className="winner">
-        <span className="trophy">🏆</span>
-        <span className="label">Final whistle</span>
+        <span className="label">Final results</span>
         <h1>{winnerText}</h1>
         {top && <p className="big-score">{top.score.toLocaleString()} pts</p>}
         {myRank > 0 && room.players[0].id !== room.you && <p className="muted">You finished #{myRank}</p>}
@@ -470,7 +469,7 @@ function Final({ room }: { room: RoomSnapshot }) {
             Play again
           </button>
         ) : (
-          <p className="waiting">Waiting for the host to start a new game…</p>
+          <p className="waiting">Waiting for host</p>
         )}
         <button className="btn link" onClick={actions.leave}>
           Leave room

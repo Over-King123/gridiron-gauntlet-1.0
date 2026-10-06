@@ -108,9 +108,13 @@ export function DailyApp({ onExit, logo }: { onExit: () => void; logo: React.Rea
         const b = await api<Board>("/daily/leaderboard");
         setBoard(b);
         if (saved && saved.date === b.date) {
-          const s = await api<DailyState>("/daily/state", saved);
-          setState(s);
-          if (s.finished) loadBoard(s.attemptId);
+          try {
+            const s = await api<DailyState>("/daily/state", saved);
+            setState(s);
+            if (s.finished) loadBoard(s.attemptId);
+          } catch {
+            store("gg-daily", null); // old or reset attempt: start fresh
+          }
         }
       } catch (e: any) {
         setErr(e.message);
@@ -142,7 +146,7 @@ export function DailyApp({ onExit, logo }: { onExit: () => void; logo: React.Rea
   };
 
   let body: React.ReactNode;
-  if (loading && !state && !board) body = <p className="muted pulse center-text">Loading today's Gauntlet…</p>;
+  if (loading && !state && !board) body = <p className="muted pulse center-text">Loading…</p>;
   else if (!state) body = <Intro board={board} onStart={begin} busy={loading} />;
   else if (!state.finished) body = <Play key={state.attemptId} state={state} onState={remember} />;
   else body = <Finished state={state} board={board} onState={remember} reloadBoard={() => loadBoard(state.attemptId)} />;
@@ -166,15 +170,10 @@ function Intro({ board, onStart, busy }: { board: Board | null; onStart: () => v
     <section className="daily-intro">
       <span className="label">Daily Gauntlet</span>
       <h1 className="daily-num">#{board?.number ?? "–"}</h1>
-      <ul className="rules">
-        <li>10 questions, NFL and college mixed</li>
-        <li>Gets harder as you go</li>
-        <li>No timer, but total time breaks ties</li>
-        <li>One shot per day. Board resets at midnight Central</li>
-      </ul>
-      {board && board.plays > 0 && <p className="muted">{board.plays} played today</p>}
+      <p className="intro-line">10 questions · One attempt · Resets at midnight CT</p>
+      {board && board.plays > 0 && <p className="muted small-text">{board.plays} played today</p>}
       <button className="btn primary big" onClick={onStart} disabled={busy}>
-        {busy ? "…" : "Start today's 10"}
+        {busy ? "Loading…" : "Start"}
       </button>
     </section>
   );
@@ -264,13 +263,13 @@ function Play({ state, onState }: { state: DailyState; onState: (s: DailyState) 
         <>
           <div className={`result ${fb.correct ? "good" : "bad"}`}>
             <div className="result-head">
-              <span>{fb.correct ? "Correct" : "Wrong"}</span>
-              <span className="pts">{shown.score} right</span>
+              <span>{fb.correct ? "Correct" : "Incorrect"}</span>
+              <span className="pts">{shown.score}/{index + 1}</span>
             </div>
             <p className="explain">{fb.explanation}</p>
           </div>
           <button className="btn primary big" onClick={advance}>
-            {isLast ? "See your score" : "Next question"}
+            {isLast ? "View results" : "Next"}
           </button>
         </>
       )}
@@ -342,36 +341,36 @@ function Finished({
           <span className="muted">/{state.total}</span>
         </h1>
         <p className="squares">{squares}</p>
-        {state.timeMs != null && <p className="muted">Finished in {fmtTime(state.timeMs)}</p>}
+        {state.timeMs != null && <p className="muted">Time: {fmtTime(state.timeMs)}</p>}
         <button className="btn ghost small" onClick={share}>
-          {copied ? "Copied" : "Share result"}
+          {copied ? "Copied" : "Share"}
         </button>
       </section>
 
       {!state.submittedName ? (
         <form className="card stack" onSubmit={submit}>
-          <h3>Put your name on today's board</h3>
+          <h3>Add to leaderboard</h3>
           <input
             className="input"
             value={name}
             onChange={(e) => setName(e.target.value.slice(0, 16))}
-            placeholder="Your name"
+            placeholder="Display name"
             maxLength={16}
           />
           {err && <p className="error">{err}</p>}
           <button className="btn primary" disabled={busy}>
-            {busy ? "…" : "Post my score"}
+            {busy ? "Submitting…" : "Submit"}
           </button>
         </form>
       ) : null}
 
       <section className="card">
         <div className="row between">
-          <h3>Today's board</h3>
+          <h3>Leaderboard</h3>
           {board && <span className="muted small-text no-margin">Resets in {fmtReset(board.resetInMs)}</span>}
         </div>
         {!board || board.entries.length === 0 ? (
-          <p className="muted center-text">No one's posted yet. Be the first.</p>
+          <p className="muted center-text">No scores yet</p>
         ) : (
           <ol className="board">
             {board.entries.map((e) => (
@@ -396,7 +395,7 @@ function Finished({
       </section>
 
       <button className="btn link" onClick={() => setReview(!review)}>
-        {review ? "Hide answers" : "Review today's answers"}
+        {review ? "Hide answers" : "Review answers"}
       </button>
       {review && (
         <ol className="review">

@@ -270,3 +270,4 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
 .review li.good .ra { color: var(--good); }
 .review li.bad .ra { color: var(--bad); }
 .review .ra .right-ans { color: var(--chalk); font-weight: 600; }
+.intro-line { color: var(--muted); font-weight: 600; margin: 4px 0 8px; }
