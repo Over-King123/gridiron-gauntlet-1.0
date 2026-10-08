@@ -31,8 +31,18 @@ standing rules for that task. Edit this file to change them.
   signature plays and big moments. Only an occasional coach, team or niche-rule question.
 - **No Roman numerals:** write "Super Bowl 47", never "Super Bowl XLVII", in questions, answers
   and explanations.
-- **Difficulty:** 1 = knowledgeable fan, 2 = serious fan, 3 = deep cut. Nothing basic (no "who won
-  the Super Bowl", "what does NFL stand for", "how many points is a touchdown").
+- **Difficulty (raised Oct 2026; the whole set should feel hard):** even the openers must make a
+  serious fan stop and think.
+  - 1 = serious fan. The second layer of a famous moment or career: who threw the pass, who was
+    the backup who took over, where a well-known player was picked. Never the headline fact.
+  - 2 = diehard. Runner-ups, supporting players in big games, draft busts and trades, specific
+    award winners outside the MVP/Heisman headline.
+  - 3 = deep cut. Decoys and intended receivers, junior-college stops, co-leaders, exact numbers.
+  - **Too easy, don't use at any level:** No. 1 overall picks from the last 15 years, "which
+    college did <star> attend", Heisman, MVP or Super Bowl MVP winners, the obvious name behind a
+    famous play, and anything most casual fans would get right.
+  - Distractors should be tempting: players who were really involved or did something similar
+    (the co-star of the play, the other QB in that draft), not filler names.
 - **Exactly one objectively correct answer.** Three plausible distractors from the same world (same
   era, position, team or conference). No "all of the above" or trick answers.
 - **Nothing that can change:** avoid "current", "active leader" and "still holds the record" unless
