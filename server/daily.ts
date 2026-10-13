@@ -142,6 +142,14 @@ interface Attempt {
   marks: number[];
   choices: number[];
   name: string | null;
+  /** fingerprint of the question set this attempt was played against */
+  setHash?: string;
+}
+
+/** Changes whenever a day's questions are edited or replaced, even if their ids stay the same. */
+function setFingerprint(qs: DailyQuestion[]): string {
+  const body = JSON.stringify(qs.map((x) => [x.q.id, x.q.question, x.q.answers, x.q.correctIndex]));
+  return crypto.createHash("sha256").update(body).digest("hex").slice(0, 16);
 }
 
 export interface BoardEntry {
@@ -229,6 +237,14 @@ export class Daily {
     return JSON.parse(raw);
   }
 
+  /** Loads an attempt and refuses it if that day's questions have changed since it was started. */
+  private async loadCurrent(date: string, id: string): Promise<Attempt> {
+    const a = await this.load(date, id);
+    if (a.setHash !== setFingerprint(await this.questionsFor(a.date)))
+      throw new DailyError("Today's questions were updated. Start again to play the new set.");
+    return a;
+  }
+
   private async save(a: Attempt) {
     await this.kv.set(k.attempt(a.date, a.id), JSON.stringify(a), this.cfg.ttlSec);
   }
@@ -266,6 +282,7 @@ export class Daily {
     const dev = String(deviceId ?? "");
     if (!/^[A-Za-z0-9_-]{16,64}$/.test(dev)) throw new DailyError("Bad device id");
     const date = this.today();
+    const setHash = setFingerprint(await this.questionsFor(date));
     const fresh: Attempt = {
       id: crypto.randomBytes(16).toString("base64url"),
       date,
@@ -274,23 +291,30 @@ export class Daily {
       marks: [],
       choices: [],
       name: null,
+      setHash,
     };
     const claimed = await this.kv.setNX(k.device(date, dev), fresh.id, this.cfg.ttlSec);
     if (claimed) {
       await this.save(fresh);
       return this.view(fresh);
     }
-    const existing = await this.kv.get(k.device(date, dev));
-    return this.view(await this.load(date, existing!));
+    const existingId = await this.kv.get(k.device(date, dev));
+    const existing = existingId ? await this.load(date, existingId).catch(() => null) : null;
+    if (existing && existing.setHash === setHash) return this.view(existing);
+    // the day's questions were replaced after this device played: the old attempt (and its board entry) no longer count
+    if (existing) await this.kv.hdel(k.board(date), existing.id);
+    await this.kv.set(k.device(date, dev), fresh.id, this.cfg.ttlSec);
+    await this.save(fresh);
+    return this.view(fresh);
   }
 
   /** Re-fetch an attempt (for a refresh mid-game or after midnight). */
   async get(date: string, attemptId: string): Promise<DailyState> {
-    return this.view(await this.load(String(date), String(attemptId)));
+    return this.view(await this.loadCurrent(String(date), String(attemptId)));
   }
 
   async answer(date: string, attemptId: string, index: number, choice: number) {
-    const a = await this.load(String(date), String(attemptId));
+    const a = await this.loadCurrent(String(date), String(attemptId));
     if (a.finishedAt) throw new DailyError("You've already finished today's Gauntlet");
     if (index !== a.marks.length) throw new DailyError("That question is already answered");
     if (!Number.isInteger(choice) || choice < 0 || choice > 3) throw new DailyError("Invalid answer");
@@ -308,7 +332,7 @@ export class Daily {
   }
 
   async submitName(date: string, attemptId: string, rawName: string) {
-    const a = await this.load(String(date), String(attemptId));
+    const a = await this.loadCurrent(String(date), String(attemptId));
     if (!a.finishedAt) throw new DailyError("Finish all 10 first");
     if (a.name) throw new DailyError("You're already on today's board");
     const name = cleanName(rawName, this.cfg.nameMaxLength);

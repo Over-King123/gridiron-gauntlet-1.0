@@ -10,6 +10,7 @@ export interface KV {
   setNX(key: string, value: string, ttlSec: number): Promise<boolean>;
   hset(key: string, field: string, value: string, ttlSec: number): Promise<void>;
   hgetall(key: string): Promise<Record<string, string>>;
+  hdel(key: string, field: string): Promise<void>;
   incr(key: string, ttlSec: number): Promise<number>;
 }
 
@@ -46,6 +47,10 @@ export class MemoryKV implements KV {
   async hgetall(key: string) {
     const e = this.live(key);
     return e?.v && typeof e.v === "object" ? { ...e.v } : {};
+  }
+  async hdel(key: string, field: string) {
+    const e = this.live(key);
+    if (e?.v && typeof e.v === "object") delete e.v[field];
   }
   async incr(key: string, ttl: number) {
     const e = this.live(key);
@@ -96,6 +101,9 @@ export class UpstashKV implements KV {
     const out: Record<string, string> = {};
     for (let i = 0; i + 1 < (flat?.length ?? 0); i += 2) out[flat[i]] = flat[i + 1];
     return out;
+  }
+  async hdel(key: string, field: string) {
+    await this.pipeline([["HDEL", key, field]]);
   }
   async incr(key: string, ttl: number) {
     const [n] = await this.pipeline([

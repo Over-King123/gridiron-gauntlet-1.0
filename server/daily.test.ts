@@ -158,6 +158,42 @@ describe("classics and dated sets", () => {
   });
 });
 
+describe("replaced sets", () => {
+  it("lets a device replay when the day's questions are replaced, and drops the old board entry", async () => {
+    const mk = (i: number, d: 1 | 2 | 3, text: string) => ({
+      id: `r-${i}`,
+      league: (i % 2 ? "NFL" : "FBS") as "NFL" | "FBS",
+      category: "test",
+      difficulty: d,
+      question: `${text} question ${i}?`,
+      answers: ["Right", "Wrong A", "Wrong B", "Wrong C"] as [string, string, string, string],
+      correctIndex: 0 as const,
+      explanation: "x",
+    });
+    const tiers = [1, 1, 1, 2, 2, 2, 2, 3, 3, 3] as const;
+    const oldSet = tiers.map((d, i) => mk(i, d, "Old"));
+    const newSet = tiers.map((d, i) => mk(i, d, "New")); // same ids, new content
+    const kv = new MemoryKV(() => T);
+
+    const before = new Daily(bank, kv, () => T, undefined, new Map([["2026-10-07", oldSet]]));
+    let st = await before.start(DEV);
+    for (let i = 0; i < 10; i++) st = await before.answer(st.date, st.attemptId, i, 0);
+    await before.submitName(st.date, st.attemptId, "Kyle");
+    expect((await before.leaderboard()).entries).toHaveLength(1);
+    expect((await before.start(DEV)).finished).toBe(true); // one attempt while the set is unchanged
+
+    // the set is replaced mid-day (new deploy, same storage)
+    const after = new Daily(bank, kv, () => T, undefined, new Map([["2026-10-07", newSet]]));
+    await expect(after.get(st.date, st.attemptId)).rejects.toThrow(/updated/);
+    const again = await after.start(DEV);
+    expect(again.finished).toBe(false);
+    expect(again.attemptId).not.toBe(st.attemptId);
+    expect(again.current!.question).toMatch(/^New/);
+    expect((await after.leaderboard()).entries).toHaveLength(0);
+    expect((await after.start(DEV)).attemptId).toBe(again.attemptId); // and still one attempt per device after that
+  });
+});
+
 describe("stale locks", () => {
   it("replaces a lock that points at questions no longer in the bank", async () => {
     const kv = new MemoryKV(() => T);
