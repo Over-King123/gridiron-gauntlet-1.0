@@ -19,7 +19,12 @@ Real-time multiplayer football trivia for 2–8 players. Players join from their
 - If a day has no dated set, questions follow a fixed shuffled schedule per difficulty tier, so nothing repeats until a tier is used up (about 17 days with the current deep-cut pool; add questions to extend it).
 - One attempt per device per day. Score is X/10; ties go to the faster total time, measured on the server.
 - Daily board shows everyone who posted a name, and starts empty each day.
-- Themed days: add a date and tag to `DAILY_THEMES` in `server/daily.ts` and tag questions (e.g. `"tags": ["SEC"]`).
+- Weekday themes (from 2026-10-14, `shared/themes.ts`): NFL Monday, College Tuesday, Hodgepodge Wednesday, Throwback Thursday (pre-College Football Playoff) and Division Friday (one NFL division per week, rotating). Weekends are the standard mixed set. The validator enforces each day's league, division-tag and pre-playoff rules for dated sets, and the fallback schedule sticks to the day's league.
+- One-off themed days: add a date and tag to `DAILY_THEMES` in `server/daily.ts` and tag questions (e.g. `"tags": ["SEC"]`).
+
+## Seasonal look
+
+The site's look follows the America/Chicago month (`client/season.tsx`, styles in `client/styles.css`): Halloween in October (bats, ghosts, pumpkin orange on night purple), fall in November (falling leaves, harvest browns), Christmas in December (snow, string lights, red and evergreen). Other months use the standard black-and-gold look. Preview any look with `?season=halloween|fall|christmas|none`. The version from `package.json` shows at the bottom of every screen.
 - Storage: Upstash Redis via `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`. Without them the server keeps the board in memory (dev only). `/healthz` reports which store is active.
 
 ## Scoring (multiplayer)

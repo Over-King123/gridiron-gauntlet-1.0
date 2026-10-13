@@ -16,6 +16,7 @@ interface DailyState {
   number: number;
   total: number;
   theme: string | null;
+  themeBlurb: string | null;
   resetInMs: number;
   attemptId: string;
   history: HistoryItem[];
@@ -28,6 +29,8 @@ interface DailyState {
 interface Board {
   date: string;
   number: number;
+  theme: string | null;
+  themeBlurb: string | null;
   resetInMs: number;
   plays: number;
   total: number;
@@ -170,6 +173,12 @@ function Intro({ board, onStart, busy }: { board: Board | null; onStart: () => v
     <section className="daily-intro">
       <span className="label">Daily Gauntlet</span>
       <h1 className="daily-num">#{board?.number ?? "–"}</h1>
+      {board?.theme && (
+        <div className="theme-card">
+          <strong>{board.theme}</strong>
+          {board.themeBlurb && <span>{board.themeBlurb}</span>}
+        </div>
+      )}
       <p className="intro-line">10 questions · One attempt · Resets at midnight CT</p>
       {board && board.plays > 0 && <p className="muted small-text">{board.plays} played today</p>}
       <button className="btn primary big" onClick={onStart} disabled={busy}>
@@ -301,7 +310,7 @@ function Finished({
   const [review, setReview] = useState(false);
 
   const squares = state.history.map((h) => (h.correct ? "🟩" : "🟥")).join("");
-  const shareText = `Gridiron Gauntlet #${state.number}: ${state.score}/${state.total}\n${squares}\n${location.origin}/daily`;
+  const shareText = `Gridiron Gauntlet #${state.number}${state.theme ? ` (${state.theme})` : ""}: ${state.score}/${state.total}\n${squares}\n${location.origin}/daily`;
 
   const share = async () => {
     try {
@@ -336,6 +345,7 @@ function Finished({
     <>
       <section className="daily-score">
         <span className="label">Daily Gauntlet #{state.number}</span>
+        {state.theme && <span className="theme-pill">{state.theme}</span>}
         <h1>
           {state.score}
           <span className="muted">/{state.total}</span>

@@ -8,6 +8,12 @@
   --muted: #8e8e8e;
   --gold: #f5c542;
   --gold-ink: #1f1700;
+  --gold-shadow: #b38a1c;
+  --gold-soft: rgba(245, 197, 66, 0.4);
+  --gold-glow: rgba(245, 197, 66, 0.55);
+  --picked: #2a2410;
+  --bg: radial-gradient(120% 60% at 50% -10%, #1c1a12 0%, #000 55%);
+  --bg-base: #000;
   --good: #2fd27a;
   --bad: #ff5a5f;
   --a: #3b82f6;
@@ -23,15 +29,20 @@ html, body { margin: 0; height: 100%; }
 body {
   font-family: Inter, system-ui, sans-serif;
   color: var(--chalk);
-  background: radial-gradient(120% 60% at 50% -10%, #1c1a12 0%, #000 55%);
-  background-color: #000;
+  background: var(--bg);
+  background-color: var(--bg-base);
   background-attachment: fixed;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
 }
 button, input { font: inherit; color: inherit; }
 
-.app { min-height: 100dvh; display: flex; justify-content: center; }
+.app { min-height: 100dvh; display: flex; justify-content: center; position: relative; }
+.app > .screen { position: relative; z-index: 1; }
+.version {
+  position: fixed; bottom: max(6px, env(safe-area-inset-bottom)); left: 0; right: 0; z-index: 1;
+  text-align: center; font-size: 10px; letter-spacing: 0.08em; color: var(--muted); opacity: 0.55; pointer-events: none;
+}
 .screen {
   width: 100%;
   max-width: 560px;
@@ -84,8 +95,8 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
 .btn:disabled { opacity: 0.45; cursor: default; }
 .btn.big { padding: 18px; font-size: 18px; width: 100%; }
 .btn.small { padding: 8px 14px; font-size: 14px; }
-.btn.primary { background: var(--gold); color: var(--gold-ink); box-shadow: 0 4px 0 #b38a1c; }
-.btn.primary:active:not(:disabled) { box-shadow: 0 1px 0 #b38a1c; transform: translateY(3px); }
+.btn.primary { background: var(--gold); color: var(--gold-ink); box-shadow: 0 4px 0 var(--gold-shadow); }
+.btn.primary:active:not(:disabled) { box-shadow: 0 1px 0 var(--gold-shadow); transform: translateY(3px); }
 .btn.ghost { background: transparent; border: 2px solid rgba(255,255,255,0.25); }
 .btn.link { background: none; color: var(--muted); padding: 8px; font-weight: 600; }
 .btn.tiny { padding: 4px 8px; margin-left: auto; }
@@ -102,7 +113,7 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
 .topbar { display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
 .code-block {
   display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 18px;
-  border: 2px dashed rgba(245,197,66,0.4); border-radius: var(--radius);
+  border: 2px dashed var(--gold-soft); border-radius: var(--radius);
 }
 .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); font-weight: 600; }
 .room-code { font-family: Oswald, sans-serif; font-size: 72px; font-weight: 700; letter-spacing: 0.18em; color: var(--gold); line-height: 1; padding-left: 0.18em; }
@@ -142,7 +153,7 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
   text-align: center; font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 18px;
   background: var(--gold); color: var(--gold-ink); border-radius: 12px; padding: 8px; animation: glow 1.2s ease-in-out infinite alternate;
 }
-@keyframes glow { to { box-shadow: 0 0 24px rgba(245,197,66,0.55); } }
+@keyframes glow { to { box-shadow: 0 0 24px var(--gold-glow); } }
 .final-q .question { border-color: var(--gold); }
 
 .question {
@@ -165,7 +176,7 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
 .answer .atext { flex: 1; }
 .answer .count { font-size: 14px; color: var(--muted); min-width: 1.2em; text-align: right; }
 .answer:disabled { cursor: default; }
-.answer.picked { border-color: var(--gold); background: #2a2410; }
+.answer.picked { border-color: var(--gold); background: var(--picked); }
 .answer.faded { opacity: 0.4; }
 .answer.correct { border-color: var(--good); background: rgba(47,210,122,0.18); animation: pop 0.35s ease; }
 .answer.correct .letter { background: var(--good); }
@@ -271,3 +282,99 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
 .review li.bad .ra { color: var(--bad); }
 .review .ra .right-ans { color: var(--chalk); font-weight: 600; }
 .intro-line { color: var(--muted); font-weight: 600; margin: 4px 0 8px; }
+
+/* ---------- daily themes ---------- */
+.theme-card {
+  display: flex; flex-direction: column; gap: 2px; padding: 10px 18px; border-radius: 14px;
+  background: var(--panel); border: 1px solid var(--gold-soft);
+}
+.theme-card strong { font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: 0.06em; font-size: 20px; color: var(--gold); }
+.theme-card span { font-size: 14px; color: var(--muted); font-weight: 600; }
+.theme-pill { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); border: 1px solid var(--gold-soft); border-radius: 999px; padding: 3px 10px; }
+
+/* ---------- seasonal looks (set on <html data-season>) ---------- */
+.season-badge {
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--gold); background: var(--panel); border: 1px solid var(--gold-soft);
+  padding: 5px 12px; border-radius: 999px; margin-top: 6px;
+}
+.season-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.season-layer .piece { position: absolute; line-height: 1; user-select: none; will-change: transform; }
+
+/* Halloween: night purple, pumpkin orange, slime green, bats and ghosts */
+:root[data-season="halloween"] {
+  --gold: #ff7a1a; --gold-ink: #1a0800; --gold-shadow: #a8440a;
+  --gold-soft: rgba(255, 122, 26, 0.45); --gold-glow: rgba(255, 122, 26, 0.6);
+  --picked: #2e1606; --good: #8fe33b;
+  --panel: #150c1d; --panel-2: #1f1229; --line: rgba(196, 140, 255, 0.14); --turf: #0a0510;
+  --chalk: #f6efff; --muted: #a395b5;
+  --bg: radial-gradient(90% 55% at 50% -5%, #3a1a52 0%, #160a22 45%, #07030b 80%);
+  --bg-base: #07030b;
+}
+[data-season="halloween"] .logo-bottom { text-shadow: 0 0 18px rgba(255, 122, 26, 0.35), 0 4px 0 rgba(0,0,0,0.5); }
+.season-layer .moon {
+  position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #fff3d6 0%, #f7d48a 45%, rgba(247, 212, 138, 0) 70%);
+  opacity: 0.18; filter: blur(1px);
+}
+.season-layer.fly .piece { left: -60px !important; opacity: 0.35; animation: fly linear infinite; }
+@keyframes fly {
+  0% { transform: translate(-10vw, 0) scale(0.9); }
+  25% { transform: translate(25vw, -24px) scale(1); }
+  50% { transform: translate(55vw, 10px) scale(0.95); }
+  75% { transform: translate(85vw, -18px) scale(1.05); }
+  100% { transform: translate(120vw, 0) scale(0.9); }
+}
+
+/* Fall: harvest browns, burnt orange, falling leaves */
+:root[data-season="fall"] {
+  --gold: #e9963a; --gold-ink: #1f0e00; --gold-shadow: #a35d17;
+  --gold-soft: rgba(233, 150, 58, 0.45); --gold-glow: rgba(233, 150, 58, 0.55);
+  --picked: #2c1c0c; --bad: #e0533d;
+  --panel: #1a120b; --panel-2: #24180e; --line: rgba(255, 210, 160, 0.12); --turf: #0d0805;
+  --chalk: #fbf1e4; --muted: #b29a82;
+  --bg: radial-gradient(100% 55% at 50% -5%, #4a2510 0%, #1c1009 45%, #0a0604 80%);
+  --bg-base: #0a0604;
+}
+.season-layer.fall .piece { top: -40px; opacity: 0.35; animation: leaf linear infinite; }
+@keyframes leaf {
+  0% { transform: translate(0, -5vh) rotate(0deg); }
+  50% { transform: translate(var(--drift), 50vh) rotate(200deg); }
+  100% { transform: translate(calc(var(--drift) * -1), 108vh) rotate(400deg); }
+}
+
+/* Christmas: evergreen, candy red, gold trim, snow and string lights */
+:root[data-season="christmas"] {
+  --gold: #e8343c; --gold-ink: #ffffff; --gold-shadow: #8e1218;
+  --gold-soft: rgba(242, 201, 76, 0.5); --gold-glow: rgba(232, 52, 60, 0.6);
+  --picked: #2e0e10; --good: #3ddc84;
+  --panel: #0b1d14; --panel-2: #10281b; --line: rgba(200, 255, 220, 0.12); --turf: #04100a;
+  --chalk: #f4fbf6; --muted: #93b3a1;
+  --bg: radial-gradient(100% 55% at 50% -5%, #134a2c 0%, #082417 45%, #030c07 80%);
+  --bg-base: #030c07;
+}
+[data-season="christmas"] .logo-top,
+[data-season="christmas"] .room-code,
+[data-season="christmas"] .daily-num,
+[data-season="christmas"] .daily-score h1,
+[data-season="christmas"] .big-score,
+[data-season="christmas"] .pts,
+[data-season="christmas"] .season-badge,
+[data-season="christmas"] .theme-card strong,
+[data-season="christmas"] .theme-pill { color: #f2c94c; }
+.season-layer.snow .piece { top: -20px; color: #fff; opacity: 0.55; animation: snow linear infinite; }
+@keyframes snow {
+  0% { transform: translate(0, -5vh); }
+  50% { transform: translate(var(--drift), 50vh); }
+  100% { transform: translate(0, 108vh); }
+}
+.season-layer .lights {
+  position: absolute; top: 0; left: 0; right: 0; height: 14px;
+  background:
+    radial-gradient(circle at 12px 7px, #ff4d4d 0 4px, transparent 5px) 0 0 / 96px 14px repeat-x,
+    radial-gradient(circle at 36px 7px, #ffd24d 0 4px, transparent 5px) 0 0 / 96px 14px repeat-x,
+    radial-gradient(circle at 60px 7px, #4dff88 0 4px, transparent 5px) 0 0 / 96px 14px repeat-x,
+    radial-gradient(circle at 84px 7px, #4dc3ff 0 4px, transparent 5px) 0 0 / 96px 14px repeat-x;
+  animation: twinkle 1.6s ease-in-out infinite alternate; opacity: 0.85;
+}
+@keyframes twinkle { to { opacity: 0.4; } }

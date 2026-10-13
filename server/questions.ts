@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Difficulty, League, LeagueMode, Question } from "../shared/types.ts";
 import { GAME_CONFIG } from "./config.ts";
+import { weeklyTheme } from "../shared/themes.ts";
 
 export type Rng = () => number;
 
@@ -164,7 +165,24 @@ export function validateDailySet(date: string, set: Question[], others: Question
   if (tiers.join() !== DAILY_MIX.join()) errs.push(`${date}: difficulty mix ${tiers.join("/")} should be ${DAILY_MIX.join("/")}`);
   if (set.filter(isClassic).length > 1) errs.push(`${date}: more than one classic question`);
   const leagues = new Set(set.map((q) => q.league));
-  if (leagues.size < 2) errs.push(`${date}: should mix NFL and FBS`);
+  const theme = weeklyTheme(date);
+  if (theme?.league) {
+    for (const q of set) if (q.league !== theme.league) errs.push(`${date} ${q.id}: ${theme.name} is ${theme.league} only`);
+  } else if (leagues.size < 2) errs.push(`${date}: should mix NFL and FBS`);
+  if (theme?.division) {
+    for (const q of set)
+      if (!q.tags?.includes(theme.division)) errs.push(`${date} ${q.id}: ${theme.name} questions need the tag "${theme.division}"`);
+  }
+  if (theme?.key === "throwback") {
+    // Throwback Thursday: nothing from the College Football Playoff era (2014 season onward)
+    for (const q of set) {
+      const text = `${q.question} ${q.answers.join(" ")} ${q.explanation}`;
+      const late = [...text.matchAll(/\b(19|20)\d\d\b/g)].map((m) => Number(m[0])).filter((y) => y >= 2015);
+      const lateSB = [...text.matchAll(/Super Bowl (\d+)/g)].map((m) => Number(m[1])).filter((n) => n >= 49);
+      if (late.length || lateSB.length || /College Football Playoff|\bCFP\b/.test(text))
+        errs.push(`${date} ${q.id}: Throwback Thursday must be before the College Football Playoff era (${[...late, ...lateSB.map((n) => "Super Bowl " + n)].join(", ") || "CFP"})`);
+    }
+  }
   for (const q of set) {
     for (const o of others) {
       if (o.id === q.id) continue;

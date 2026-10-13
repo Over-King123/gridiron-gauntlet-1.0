@@ -2,12 +2,16 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { LeagueMode, PublicPlayer, RoomSnapshot } from "../shared/types.ts";
 import { actions, useCountdown, useStore } from "./game.ts";
 import { DailyApp } from "./Daily.tsx";
+import { SeasonLayer, currentSeason, seasonBadge, useSeason } from "./season.tsx";
+import { chicagoDate, weeklyTheme } from "../shared/themes.ts";
 
 const LEAGUE_LABEL: Record<LeagueMode, string> = { NFL: "NFL", FBS: "College (FBS)", MIXED: "Mixed" };
 const LETTERS = ["A", "B", "C", "D"];
 
 export function App() {
   const { room, connected, resuming, notice } = useStore();
+  const season = useMemo(currentSeason, []);
+  useSeason(season);
   const [daily, setDaily] = useState(() => /^\/daily\/?$/i.test(location.pathname));
   const openDaily = (on: boolean) => {
     setDaily(on);
@@ -29,6 +33,7 @@ export function App() {
 
   return (
     <div className="app">
+      <SeasonLayer season={season} />
       {!connected && !resuming && <div className="conn">Reconnecting…</div>}
       {notice && (
         <div className="notice" onClick={actions.clearNotice}>
@@ -36,6 +41,7 @@ export function App() {
         </div>
       )}
       {body}
+      <footer className="version">v{__APP_VERSION__}</footer>
     </div>
   );
 }
@@ -66,6 +72,8 @@ function Entry({ initialCode, onDaily }: { initialCode: string; onDaily: () => v
   const [code, setCode] = useState(initialCode);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  const badge = useMemo(() => seasonBadge(currentSeason()), []);
+  const todayTheme = useMemo(() => weeklyTheme(chicagoDate()), []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,11 +99,12 @@ function Entry({ initialCode, onDaily }: { initialCode: string; onDaily: () => v
     return (
       <main className="screen center">
         <Logo />
+        {badge && <span className="season-badge">{badge}</span>}
         <p className="tagline">NFL and college football trivia</p>
         <div className="stack wide">
           <button className="btn primary big daily-cta" onClick={onDaily}>
             <span>Daily Gauntlet</span>
-            <small>10 questions · new every day</small>
+            <small>{todayTheme ? `${todayTheme.name} · 10 questions` : "10 questions · new every day"}</small>
           </button>
           <div className="divider">
             <span>Multiplayer</span>

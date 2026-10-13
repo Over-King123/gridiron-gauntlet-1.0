@@ -3,6 +3,7 @@ import type { Question } from "../shared/types.ts";
 import type { KV } from "./store.ts";
 import { cleanName } from "./room.ts";
 import { isClassic } from "./questions.ts";
+import { weeklyTheme } from "../shared/themes.ts";
 
 // ---------------- configuration ----------------
 
@@ -26,6 +27,14 @@ export const DAILY_CONFIG = {
  * Example: { "2026-11-07": { name: "SEC Saturday", tag: "SEC" } }
  */
 export const DAILY_THEMES: Record<string, { name: string; tag: string }> = {};
+
+/** What the Daily screen shows for a date: a one-off theme wins, then the weekday theme. */
+export function themeInfo(date: string): { name: string; blurb: string | null } | null {
+  const special = DAILY_THEMES[date];
+  if (special) return { name: special.name, blurb: null };
+  const weekly = weeklyTheme(date);
+  return weekly ? { name: weekly.name, blurb: weekly.blurb } : null;
+}
 
 // ---------------- dates ----------------
 
@@ -80,13 +89,18 @@ export interface DailyQuestion {
 export function dailyQuestions(bank: Question[], date: string, cfg = DAILY_CONFIG): DailyQuestion[] {
   const day = dayNumber(date, cfg.epoch);
   const theme = DAILY_THEMES[date];
+  // weekday league themes (NFL Monday, College Tuesday, Division Friday) when no set was written
+  const league = weeklyTheme(date)?.league ?? null;
   const order = (pool: Question[]) => pool.slice().sort((a, b) => h(cfg.seed + a.id) - h(cfg.seed + b.id) || (a.id < b.id ? -1 : 1));
   const modern = bank.filter((q) => !isClassic(q));
   const picked: Question[] = [];
   for (let tier = 1; tier <= 3; tier++) {
     const want = cfg.mix[tier - 1];
     // modern questions only: each day consumes its own slice, so nothing repeats until a tier wraps
-    const all = order(modern.filter((q) => q.difficulty === tier));
+    const tierAll = order(modern.filter((q) => q.difficulty === tier));
+    const leagueOnly = league ? tierAll.filter((q) => q.league === league) : tierAll;
+    // fall back to the whole tier only if a league tier is too small to fill the day
+    const all = leagueOnly.length >= want ? leagueOnly : tierAll;
     const chosen: Question[] = [];
     if (theme) {
       const themed = all.filter((q) => q.tags?.includes(theme.tag));
@@ -104,7 +118,7 @@ export function dailyQuestions(bank: Question[], date: string, cfg = DAILY_CONFI
   const classics = order(bank.filter(isClassic));
   if (cfg.maxClassic > 0 && classics.length && day % 3 === 0) {
     const c = classics[Math.floor(day / 3) % classics.length];
-    const slot = picked.findIndex((q) => q.difficulty === c.difficulty);
+    const slot = league && c.league !== league ? -1 : picked.findIndex((q) => q.difficulty === c.difficulty);
     if (slot !== -1) picked[slot] = c;
   }
   return picked.map((q) => withAnswerOrder(q, date));
@@ -149,6 +163,7 @@ export interface DailyState {
   number: number;
   total: number;
   theme: string | null;
+  themeBlurb: string | null;
   resetInMs: number;
   attemptId: string;
   /** answered so far, with feedback, so a refresh can rebuild the screen */
@@ -226,7 +241,8 @@ export class Daily {
       date: a.date,
       number: dayNumber(a.date, this.cfg.epoch),
       total: qs.length,
-      theme: DAILY_THEMES[a.date]?.name ?? null,
+      theme: themeInfo(a.date)?.name ?? null,
+      themeBlurb: themeInfo(a.date)?.blurb ?? null,
       resetInMs: msUntilReset(this.now(), this.cfg.timeZone),
       attemptId: a.id,
       history: a.marks.map((m, j) => ({
@@ -322,6 +338,8 @@ export class Daily {
     return {
       date: d,
       number: dayNumber(d, this.cfg.epoch),
+      theme: themeInfo(d)?.name ?? null,
+      themeBlurb: themeInfo(d)?.blurb ?? null,
       resetInMs: msUntilReset(this.now(), this.cfg.timeZone),
       plays,
       total: rows.length,

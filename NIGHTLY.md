@@ -8,27 +8,48 @@ standing rules for that task. Edit this file to change them.
 
 1. Work out tomorrow's date in America/Chicago. If `content/daily/<tomorrow>.json` already exists,
    target the next missing date instead, but never more than 3 days ahead. If those all exist, stop.
-2. Read every existing question (`content/questions/*.json` and `content/daily/*.json`) so nothing
+2. Check which weekday that date falls on and follow its theme (see **Weekday themes** below).
+   For Division Friday, find that Friday's division with
+   `npx tsx -e "import {divisionFor} from './shared/themes.ts'; console.log(divisionFor('<date>'))"`.
+3. Read every existing question (`content/questions/*.json` and `content/daily/*.json`) so nothing
    is repeated or near-repeated: no same fact asked a different way, no same answer for the same feat.
-3. Write 10 new questions following the content rules below.
-4. Fact-check every question with web search before keeping it: the correct answer, each
+4. Write 10 new questions following the theme and the content rules below.
+5. Fact-check every question with web search before keeping it: the correct answer, each
    distractor being wrong, and every number, year and name in the question and explanation.
    Drop or replace anything that can't be confirmed from a reliable source (Pro Football Reference,
    Sports Reference CFB, ESPN, NFL.com, school or conference sites, major outlets).
-5. Save the file, then run `npm install` (first time only), `npm run validate` and `npm test`. Fix
+6. Save the file, then run `npm install` (first time only), `npm run validate` and `npm test`. Fix
    anything they flag.
-6. Commit with the message `Daily set for <date>` and push to `main`. Render deploys it automatically.
+7. Commit with the message `Daily set for <date>` and push to `main`. Render deploys it automatically.
+
+## Weekday themes
+
+Days are America/Chicago calendar days. `npm run validate` enforces the league and tag rules.
+
+| Day | Theme | Rules |
+| --- | --- | --- |
+| Monday | NFL Monday | All 10 questions NFL. |
+| Tuesday | College Tuesday | All 10 questions FBS. |
+| Wednesday | Hodgepodge Wednesday | Anything goes: mixed leagues and topics (at least 4 NFL, 4 FBS), spread across many teams, eras and kinds of questions. |
+| Thursday | Throwback Thursday | Everything happened **before the College Football Playoff era**, so nothing from the 2014 season onward (latest NFL game Super Bowl 48, latest college game the January 2014 BCS title game). Mixed leagues (at least 4 NFL, 4 FBS). Don't mention any year from 2015 on, even in explanations; the validator rejects it. The 1990-onward rule and the one-classic cap still apply. |
+| Friday | Division Friday | All 10 questions NFL, all about that week's division (rotates AFC East, NFC East, AFC North, NFC North, AFC South, NFC South, AFC West, NFC West). Spread across all four teams, and give every question `"tags": ["<division>"]`, e.g. `"tags": ["AFC North"]`. |
+| Saturday, Sunday | Standard | Normal mixed set (at least 4 NFL, 4 FBS). |
+
+All the content rules below apply on every day; a theme only narrows which questions fit. The
+"at least 4 NFL and 4 FBS" rule applies only to the mixed days.
 
 ## Content rules
 
 - **Exactly 10 questions:** 3 at difficulty 1, 4 at difficulty 2, 3 at difficulty 3. The game
   plays them easy to hard.
-- **League mix:** at least 4 NFL and at least 4 FBS. College questions are FBS programs only; never
+- **League mix:** on mixed days (Wednesday, Thursday, weekends), at least 4 NFL and at least 4 FBS. College questions are FBS programs only; never
   FCS. (An NFL player's FCS college is fine as an NFL question.)
 - **Era:** 1990 onward. At most one older question per day, and it must be iconic and carry
   `"tags": ["classic"]`.
 - **Focus:** players first: careers, stat lines, draft slots, college-to-pro paths, awards, records,
   signature plays and big moments. Only an occasional coach, team or niche-rule question.
+- **No kicker questions:** don't ask about kickers or punters: no field goals, misses or kicking
+  records as the subject, and no kicker or punter as the answer.
 - **No Roman numerals:** write "Super Bowl 47", never "Super Bowl XLVII", in questions, answers
   and explanations.
 - **Difficulty (raised Oct 2026; the whole set should feel hard):** even the openers must make a
