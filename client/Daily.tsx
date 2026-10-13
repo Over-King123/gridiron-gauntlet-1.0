@@ -404,27 +404,45 @@ function Finished({
         )}
       </section>
 
-      <button className="btn link" onClick={() => setReview(!review)}>
-        {review ? "Hide answers" : "Review answers"}
-      </button>
-      {review && (
-        <ol className="review">
-          {state.history.map((h, i) => (
-            <li key={i} className={h.correct ? "good" : "bad"}>
-              <p className="rq">{h.question}</p>
-              {h.correct ? (
-                <p className="ra">✓ {h.answers[h.correctIndex]}</p>
-              ) : (
-                <p className="ra">
-                  ✗ You said {h.answers[h.choice]}
-                  <span className="right-ans"> · Answer: {h.answers[h.correctIndex]}</span>
-                </p>
-              )}
-              <p className="explain small-text">{h.explanation}</p>
-            </li>
-          ))}
-        </ol>
-      )}
+      <section className="card review-card">
+        <button className="review-toggle" onClick={() => setReview(!review)} aria-expanded={review}>
+          <span>
+            <span className="review-title">Answer review</span>
+            <span className="review-sub">
+              {state.score} of {state.total} correct
+            </span>
+          </span>
+          <span className={`chev ${review ? "open" : ""}`} aria-hidden="true">
+            ›
+          </span>
+        </button>
+        {review && (
+          <ol className="review">
+            {state.history.map((h, i) => (
+              <li key={i} className={`review-item ${h.correct ? "good" : "bad"}`}>
+                <div className="review-head">
+                  <span className="review-num">Question {i + 1}</span>
+                  <span className={`review-badge ${h.correct ? "good" : "bad"}`}>{h.correct ? "Correct" : "Incorrect"}</span>
+                </div>
+                <p className="rq">{h.question}</p>
+                <dl className="review-answers">
+                  <div className={`ans-row ${h.correct ? "good" : "bad"}`}>
+                    <dt>Your answer</dt>
+                    <dd>{h.answers[h.choice]}</dd>
+                  </div>
+                  {!h.correct && (
+                    <div className="ans-row right">
+                      <dt>Correct answer</dt>
+                      <dd>{h.answers[h.correctIndex]}</dd>
+                    </div>
+                  )}
+                </dl>
+                <p className="review-explain">{h.explanation}</p>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
     </>
   );
 }

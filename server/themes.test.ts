@@ -29,7 +29,7 @@ describe("weekday themes", () => {
     expect(weeklyTheme("2026-10-16")?.key).toBe("division");
     expect(weeklyTheme("2026-10-17")).toBeNull(); // Saturday
     expect(weeklyTheme("2026-10-18")).toBeNull(); // Sunday
-    expect(weeklyTheme("2026-10-13")).toBeNull(); // before themes started
+    expect(weeklyTheme("2026-10-12")).toBeNull(); // before themes started
   });
   it("rotates divisions one per Friday", () => {
     const fridays = Array.from({ length: 9 }, (_, w) => new Date(Date.parse("2026-10-16T00:00:00Z") + w * 7 * 86_400_000).toISOString().slice(0, 10));

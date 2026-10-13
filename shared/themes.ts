@@ -6,7 +6,7 @@ import type { League } from "./types.ts";
  */
 
 /** First day the weekday themes apply. Earlier sets were written before themes existed. */
-export const WEEKLY_THEMES_START = "2026-10-14";
+export const WEEKLY_THEMES_START = "2026-10-13";
 
 /** Division Friday cycles through these in order, one per week. */
 export const DIVISIONS = [

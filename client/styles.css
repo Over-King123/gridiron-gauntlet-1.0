@@ -273,14 +273,36 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color:
 .board .btime { font-size: 13px; }
 .board .score { font-size: 20px; min-width: 3.5ch; }
 .board .score .muted { font-size: 14px; }
-.review { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-.review li { background: var(--panel); border-radius: 12px; padding: 12px 14px; border-left: 4px solid var(--good); }
-.review li.bad { border-left-color: var(--bad); }
-.review .rq { margin: 0 0 6px; font-weight: 700; }
-.review .ra { margin: 0; font-weight: 700; }
-.review li.good .ra { color: var(--good); }
-.review li.bad .ra { color: var(--bad); }
-.review .ra .right-ans { color: var(--chalk); font-weight: 600; }
+/* answer review */
+.review-card { padding: 0; overflow: hidden; }
+.review-toggle {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: none; border: 0; padding: 16px; cursor: pointer; text-align: left;
+}
+.review-toggle > span:first-child { display: flex; flex-direction: column; gap: 4px; }
+.review-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; }
+.review-sub { font-size: 14px; font-weight: 600; color: var(--chalk); }
+.chev { font-size: 26px; line-height: 1; color: var(--muted); transition: transform 0.2s; transform: rotate(90deg); }
+.chev.open { transform: rotate(-90deg); }
+.review { list-style: none; padding: 0 16px 16px; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.review-item { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.review-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.review-num { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.review-badge { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 9px; border-radius: 999px; }
+.review-badge.good { color: var(--good); background: color-mix(in srgb, var(--good) 15%, transparent); }
+.review-badge.bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 15%, transparent); }
+.review .rq { margin: 0 0 12px; font-weight: 700; font-size: 16px; line-height: 1.4; }
+.review-answers { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.ans-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 12px; border-radius: 10px; background: var(--turf); border-left: 3px solid var(--line); }
+.ans-row dt { font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.ans-row dd { margin: 0; font-weight: 700; text-align: right; }
+.ans-row.good { border-left-color: var(--good); }
+.ans-row.good dd { color: var(--good); }
+.ans-row.bad { border-left-color: var(--bad); }
+.ans-row.bad dd { color: var(--bad); text-decoration: line-through; text-decoration-thickness: 1px; }
+.ans-row.right { border-left-color: var(--good); }
+.ans-row.right dd { color: var(--chalk); }
+.review-explain { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.5; color: var(--muted); }
 .intro-line { color: var(--muted); font-weight: 600; margin: 4px 0 8px; }
 
 /* ---------- daily themes ---------- */

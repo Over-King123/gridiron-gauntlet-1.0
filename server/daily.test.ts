@@ -31,8 +31,8 @@ describe("daily schedule", () => {
   });
   it("doesn't repeat questions across consecutive days", () => {
     const seen = new Set<string>();
-    // 9 straight days of fallback schedule with no repeats
-    for (let d = 0; d < 9; d++) {
+    // a week of unthemed fallback schedule (before weekday themes began) with no repeats
+    for (let d = 0; d < 7; d++) {
       const date = new Date(Date.parse("2026-10-06T12:00:00Z") + d * 86_400_000).toISOString().slice(0, 10);
       for (const x of dailyQuestions(bank, date)) {
         expect(seen.has(x.q.id), `${x.q.id} repeated on ${date}`).toBe(false);

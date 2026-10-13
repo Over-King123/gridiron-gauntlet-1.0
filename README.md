@@ -19,7 +19,7 @@ Real-time multiplayer football trivia for 2–8 players. Players join from their
 - If a day has no dated set, questions follow a fixed shuffled schedule per difficulty tier, so nothing repeats until a tier is used up (about 17 days with the current deep-cut pool; add questions to extend it).
 - One attempt per device per day. Score is X/10; ties go to the faster total time, measured on the server.
 - Daily board shows everyone who posted a name, and starts empty each day.
-- Weekday themes (from 2026-10-14, `shared/themes.ts`): NFL Monday, College Tuesday, Hodgepodge Wednesday, Throwback Thursday (pre-College Football Playoff) and Division Friday (one NFL division per week, rotating). Weekends are the standard mixed set. The validator enforces each day's league, division-tag and pre-playoff rules for dated sets, and the fallback schedule sticks to the day's league.
+- Weekday themes (from 2026-10-13, `shared/themes.ts`): NFL Monday, College Tuesday, Hodgepodge Wednesday, Throwback Thursday (pre-College Football Playoff) and Division Friday (one NFL division per week, rotating). Weekends are the standard mixed set. The validator enforces each day's league, division-tag and pre-playoff rules for dated sets, and the fallback schedule sticks to the day's league.
 - One-off themed days: add a date and tag to `DAILY_THEMES` in `server/daily.ts` and tag questions (e.g. `"tags": ["SEC"]`).
 
 ## Seasonal look
