@@ -27,6 +27,10 @@ Real-time multiplayer football trivia for 2–8 players. Players join from their
 The site's look follows the America/Chicago month (`client/season.tsx`, styles in `client/styles.css`): Halloween in October (bats, ghosts, pumpkin orange on night purple), fall in November (falling leaves, harvest browns), Christmas in December (snow, string lights, red and evergreen). Other months use the standard black-and-gold look. Preview any look with `?season=halloween|fall|christmas|none`. The version from `package.json` shows at the bottom of every screen.
 - Storage: Upstash Redis via `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`. Without them the server keeps the board in memory (dev only). `/healthz` reports which store is active.
 
+## Instagram
+
+A GitHub Action posts a daily reel (a question from yesterday's Daily, seasonal look, answer reveal, "link in bio" call to action) at about 11 a.m. Central. Setup and commands: [docs/INSTAGRAM.md](docs/INSTAGRAM.md). Shared links show a preview card (`client/public/og.png`, rebuild with `npm run og`).
+
 ## Scoring (multiplayer)
 
 - Correct: `700 + round(300 × timeRemaining / 20s)` → 700–1,000 points

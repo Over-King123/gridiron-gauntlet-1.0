@@ -1,0 +1,78 @@
+name: Daily Instagram reel
+
+# Posts a reel every day at about 11:00 a.m. Central.
+# GitHub cron is UTC, so it fires at both 16:03 and 17:03 UTC (11:03 CDT / 11:03 CST);
+# the time check below skips the run outside 11 a.m.-12:59 p.m. Central, and the post script
+# skips if today's reel is already on the account.
+on:
+  schedule:
+    - cron: "3 16 * * *"
+    - cron: "3 17 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Post date YYYY-MM-DD (blank = today, Central time)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Render only, don't post"
+        type: boolean
+        default: false
+
+concurrency:
+  group: instagram-reel
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check posting window
+        id: window
+        run: |
+          hour=$(TZ=America/Chicago date +%H)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$hour" != "11" ] && [ "$hour" != "12" ]; then
+            echo "It's ${hour}:00 in Chicago; outside the posting window, skipping."
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.go == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.window.outputs.go == 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        if: steps.window.outputs.go == 'true'
+        run: |
+          npm ci
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji
+          npx playwright-core install --with-deps chromium
+
+      - name: Render and post
+        if: steps.window.outputs.go == 'true'
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_GRAPH_VERSION: ${{ vars.IG_GRAPH_VERSION }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+        run: npm run social:post -- ${{ inputs.date }}
+
+      - name: Save reel, cover and caption
+        if: always() && steps.window.outputs.go == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-reel-${{ github.run_id }}
+          path: out/social/
+          if-no-files-found: ignore
+          retention-days: 14
