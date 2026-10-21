@@ -1,0 +1,112 @@
+[
+  {
+    "id": "d20261022-01",
+    "league": "NFL",
+    "category": "championships",
+    "difficulty": 1,
+    "question": "Which quarterback led the Giants into their 34-7 loss to Baltimore in Super Bowl 35?",
+    "answers": ["Kerry Collins", "Kent Graham", "Jason Garrett", "Danny Kanell"],
+    "correctIndex": 0,
+    "explanation": "Two weeks after throwing for 381 yards and five touchdowns in a 41-0 NFC Championship rout of Minnesota, Collins was intercepted four times by the Ravens, tying the Super Bowl record at the time.",
+    "source": "https://www.pro-football-reference.com/boxscores/200101140nyg.htm"
+  },
+  {
+    "id": "d20261022-02",
+    "league": "FBS",
+    "category": "players and careers",
+    "difficulty": 1,
+    "question": "Who quarterbacked Miami's unbeaten 2001 national championship team, capped by a Rose Bowl win over Nebraska?",
+    "answers": ["Ken Dorsey", "Brock Berlin", "Kyle Wright", "Derrick Crudup"],
+    "correctIndex": 0,
+    "explanation": "Dorsey went 38-2 as Miami's starter, including a 34-game winning streak, and was a Heisman finalist in both 2001 and 2002.",
+    "source": "https://en.wikipedia.org/wiki/Ken_Dorsey"
+  },
+  {
+    "id": "d20261022-03",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 1,
+    "question": "Ricky Proehl caught a game-tying touchdown with 1:30 left in Super Bowl 36 for the Rams. Two years later he caught another late tying touchdown, with 1:08 left in Super Bowl 38, for which team?",
+    "answers": ["Carolina Panthers", "Seattle Seahawks", "Chicago Bears", "Indianapolis Colts"],
+    "correctIndex": 0,
+    "explanation": "Both of Proehl's clutch catches came against New England, and both times the Patriots answered on the final drive to win by three points, 20-17 and 32-29.",
+    "source": "https://en.wikipedia.org/wiki/Ricky_Proehl"
+  },
+  {
+    "id": "d20261022-04",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 2,
+    "question": "Leon Lett's showboating fumble return in Super Bowl 27 ended when which Buffalo wideout chased him down and knocked the ball loose just before the goal line?",
+    "answers": ["Don Beebe", "Andre Reed", "James Lofton", "Thurman Thomas"],
+    "correctIndex": 0,
+    "explanation": "Lett had scooped up the fumble at the Dallas 35 and slowed down holding the ball out; Beebe's hustle play sent it through the end zone for a touchback with the Cowboys already ahead 52-17.",
+    "source": "https://en.wikipedia.org/wiki/Leon_Lett"
+  },
+  {
+    "id": "d20261022-05",
+    "league": "NFL",
+    "category": "draft history",
+    "difficulty": 2,
+    "question": "Who was the No. 1 overall pick in the 1990 NFL Draft?",
+    "answers": ["Jeff George", "Blair Thomas", "Cortez Kennedy", "Junior Seau"],
+    "correctIndex": 0,
+    "explanation": "Indianapolis got the top pick from Atlanta by sending offensive tackle Chris Hinton and receiver Andre Rison to the Falcons, then took George, a quarterback from Illinois.",
+    "source": "https://en.wikipedia.org/wiki/1990_NFL_draft"
+  },
+  {
+    "id": "d20261022-06",
+    "league": "FBS",
+    "category": "championships",
+    "difficulty": 2,
+    "question": "Who started at quarterback for LSU in its 21-14 win over Oklahoma in the January 2004 Sugar Bowl for the BCS national title?",
+    "answers": ["Matt Mauck", "Marcus Randall", "JaMarcus Russell", "Rohan Davey"],
+    "correctIndex": 0,
+    "explanation": "Mauck had spent three years in the Chicago Cubs' minor-league system before LSU; he turned pro after the title season and later became a dentist in Colorado.",
+    "source": "https://allstatesugarbowl.org/sports/2022/4/18/70th-annual-sugar-bowl-classic-january-4-2004.aspx"
+  },
+  {
+    "id": "d20261022-07",
+    "league": "FBS",
+    "category": "awards",
+    "difficulty": 2,
+    "question": "Notre Dame's Jeff Samardzija and Rice's Jarett Dillard were finalists for the 2006 Biletnikoff Award. Who beat them for it?",
+    "answers": ["Calvin Johnson", "Dwayne Jarrett", "Ted Ginn Jr.", "Dwayne Bowe"],
+    "correctIndex": 0,
+    "explanation": "Johnson caught 67 passes for 1,016 yards and 13 touchdowns, becoming only the second Georgia Tech player to win a national award, after quarterback Joe Hamilton's Davey O'Brien Award.",
+    "source": "https://ramblinwreck.com/johnson-wins-biletnikoff-award"
+  },
+  {
+    "id": "d20261022-08",
+    "league": "NFL",
+    "category": "iconic games",
+    "difficulty": 3,
+    "question": "Which Giants cornerback intercepted Brett Favre on the second play of overtime in the frigid January 2008 NFC Championship Game at Lambeau Field?",
+    "answers": ["Corey Webster", "Aaron Ross", "R.W. McQuarters", "Sam Madison"],
+    "correctIndex": 0,
+    "explanation": "Favre was throwing for Donald Driver; it was his last pass as a Packer, and New York won 23-20 in a game that kicked off at about minus 1 degree.",
+    "source": "https://en.wikipedia.org/wiki/2007_NFC_Championship_Game"
+  },
+  {
+    "id": "d20261022-09",
+    "league": "FBS",
+    "category": "iconic plays",
+    "difficulty": 3,
+    "question": "In overtime of the 2007 Fiesta Bowl, Boise State scored on fourth-and-2 when a backup wide receiver took a direct snap and threw a touchdown pass to tight end Derek Schouman. Who threw it?",
+    "answers": ["Vinny Perretta", "Jerard Rabb", "Ian Johnson", "Jared Zabransky"],
+    "correctIndex": 0,
+    "explanation": "Quarterback Zabransky went in motion as Perretta rolled right and threw, cutting Oklahoma's lead to 42-41 before the Statue of Liberty two-pointer won it 43-42.",
+    "source": "https://en.wikipedia.org/wiki/2007_Fiesta_Bowl"
+  },
+  {
+    "id": "d20261022-10",
+    "league": "FBS",
+    "category": "iconic games",
+    "difficulty": 3,
+    "question": "Making his first career start, which quarterback threw the fourth-down touchdown to Mark Bradford with 49 seconds left as 41-point underdog Stanford stunned USC 24-23 in October 2007?",
+    "answers": ["Tavita Pritchard", "T.C. Ostrander", "Andrew Luck", "Trent Edwards"],
+    "correctIndex": 0,
+    "explanation": "Pritchard started because Ostrander had suffered a seizure the previous Sunday; Bradford leaped over cornerback Mozique McCurtis in the corner of the end zone for the 10-yard score.",
+    "source": "https://gostanford.com/news/2007/10/6/208089351"
+  }
+]
