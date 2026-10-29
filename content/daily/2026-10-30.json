@@ -1,0 +1,122 @@
+[
+  {
+    "id": "d20261030-01",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 1,
+    "tags": ["AFC North"],
+    "question": "Baker Mayfield made his NFL debut off the bench in September 2018, rallying Cleveland past the Jets 21-17. Which Browns starter had left the game with a concussion?",
+    "answers": ["Tyrod Taylor", "DeShone Kizer", "Drew Stanton", "Josh McCown"],
+    "correctIndex": 0,
+    "explanation": "Taylor was hurt late in the second quarter, and Mayfield's comeback ended Cleveland's 19-game winless streak.",
+    "source": "https://www.espn.co.uk/nfl/recap/_/gameId/401030775"
+  },
+  {
+    "id": "d20261030-02",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 1,
+    "tags": ["AFC North"],
+    "question": "On a second-quarter trick play in Super Bowl 56, which Bengal threw a 6-yard touchdown pass to Tee Higgins?",
+    "answers": ["Joe Mixon", "Ja'Marr Chase", "Samaje Perine", "Tyler Boyd"],
+    "correctIndex": 0,
+    "explanation": "Running back Mixon took the pitch and found Higgins alone in the back of the end zone in what became a 23-20 loss to the Rams.",
+    "source": "https://arizonasports.com/nfl/bengals-run-trick-play-that-results-in-a-super-bowl-lvi-touchdown"
+  },
+  {
+    "id": "d20261030-03",
+    "league": "NFL",
+    "category": "iconic games",
+    "difficulty": 1,
+    "tags": ["AFC North"],
+    "question": "Troy Polamalu's 40-yard interception return with 4:39 left sealed Pittsburgh's 23-14 win over Baltimore in the January 2009 AFC Championship Game. Which quarterback threw it?",
+    "answers": ["Joe Flacco", "Kyle Boller", "Troy Smith", "Steve McNair"],
+    "correctIndex": 0,
+    "explanation": "Flacco was a rookie that season; the win sent the Steelers to Super Bowl 43, where they beat Arizona.",
+    "source": "https://steelersdepot.com/2009/01/steelers-drop-ravens-23-14-head-to-super-bowl-43"
+  },
+  {
+    "id": "d20261030-04",
+    "league": "NFL",
+    "category": "records",
+    "difficulty": 2,
+    "tags": ["AFC North"],
+    "question": "Ed Reed broke his own NFL record for the longest interception return in a 36-7 win over Philadelphia in November 2008. Which Eagles quarterback threw that pass?",
+    "answers": ["Kevin Kolb", "Donovan McNabb", "A.J. Feeley", "Jeff Garcia"],
+    "correctIndex": 0,
+    "explanation": "Kolb was in because Donovan McNabb had been benched at halftime; Reed's previous record return had come against Cleveland in 2004.",
+    "source": "https://baltimoreravens.com/news/flashback-battle-of-the-birds-8271636"
+  },
+  {
+    "id": "d20261030-05",
+    "league": "NFL",
+    "category": "iconic games",
+    "difficulty": 2,
+    "tags": ["AFC North"],
+    "question": "Cincinnati's 26-19 wild-card win over Las Vegas in January 2022, its first playoff win in more than 30 years, ended with which linebacker intercepting Derek Carr on fourth down?",
+    "answers": ["Germaine Pratt", "Logan Wilson", "Akeem Davis-Gaither", "Joe Bachie"],
+    "correctIndex": 0,
+    "explanation": "The Raiders had driven inside the Cincinnati 10 before Pratt, a 2019 third-round pick out of NC State, made the game-ending pick.",
+    "source": "https://en.wikipedia.org/wiki/Germaine_Pratt"
+  },
+  {
+    "id": "d20261030-06",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 2,
+    "tags": ["AFC North"],
+    "question": "The expansion Browns returned in September 1999 with a 43-0 home loss to Pittsburgh. Who was Cleveland's starting quarterback that night?",
+    "answers": ["Ty Detmer", "Tim Couch", "Kelly Holcomb", "Doug Pederson"],
+    "correctIndex": 0,
+    "explanation": "Detmer went 6 of 13 for 52 yards; No. 1 pick Tim Couch debuted with about 10 minutes left and took over as the starter the next week.",
+    "source": "https://www.espn.com.br/nfl/1999/990912/recap/pitcle.html"
+  },
+  {
+    "id": "d20261030-07",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 2,
+    "tags": ["AFC North"],
+    "question": "Carson Palmer tore his ACL on his first pass of the January 2006 wild-card game against Pittsburgh. Which Steelers defensive lineman hit him?",
+    "answers": ["Kimo von Oelhoffen", "Casey Hampton", "Aaron Smith", "Brett Keisel"],
+    "correctIndex": 0,
+    "explanation": "Palmer's throw was a 66-yard completion to rookie Chris Henry; Jon Kitna finished the game, and the Steelers won 31-17 on their way to a Super Bowl title.",
+    "source": "https://www.nfl.com/news/bengals-lose-palmer-then-fall-to-steelers-09000d5d8014dbc2"
+  },
+  {
+    "id": "d20261030-08",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 3,
+    "tags": ["AFC North"],
+    "question": "On the first snap of the January 2021 wild-card game at Pittsburgh, Maurkice Pouncey's snap sailed past Ben Roethlisberger. Which Browns defender recovered it in the end zone for a touchdown?",
+    "answers": ["Karl Joseph", "M.J. Stewart", "Sheldon Richardson", "Myles Garrett"],
+    "correctIndex": 0,
+    "explanation": "Safety Karl Joseph's recovery started a 28-0 first quarter, and M.J. Stewart's interception soon after set up another score in Cleveland's 48-37 win, its first playoff win since the 1994 season.",
+    "source": "https://www.cbssports.com/nfl/news/browns-end-18-year-playoff-drought-by-scoring-touchdown-on-the-first-play-of-wild-card-game-vs-steelers"
+  },
+  {
+    "id": "d20261030-09",
+    "league": "NFL",
+    "category": "stat line",
+    "difficulty": 3,
+    "tags": ["AFC North"],
+    "question": "Lamar Jackson broke Michael Vick's single-season rushing record for a quarterback in 2019. How many rushing yards did he finish with?",
+    "answers": ["1,206", "1,108", "1,187", "1,251"],
+    "correctIndex": 0,
+    "explanation": "Jackson also led the NFL with 36 touchdown passes that year, joining Steve Young (1994) as the only quarterbacks to lead the league in both passing touchdowns and quarterback rushing yards.",
+    "source": "https://www.nfl.com/news/ravens-qb-lamar-jackson-named-2019-nfl-mvp-0ap3000001100156"
+  },
+  {
+    "id": "d20261030-10",
+    "league": "NFL",
+    "category": "championships",
+    "difficulty": 3,
+    "tags": ["AFC North"],
+    "question": "Which Steelers running back, an undrafted free agent out of Minnesota, scored on a 1-yard run in the second quarter of Super Bowl 43?",
+    "answers": ["Gary Russell", "Mewelde Moore", "Willie Parker", "Carey Davis"],
+    "correctIndex": 0,
+    "explanation": "Russell, Pittsburgh's short-yardage back after Rashard Mendenhall's injury, finished with two carries for minus-3 yards and that touchdown.",
+    "source": "https://en.wikipedia.org/wiki/Gary_Russell_(American_football)"
+  }
+]
