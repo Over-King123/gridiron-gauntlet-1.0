@@ -1,0 +1,162 @@
+[
+  {
+    "id": "d20261031-01",
+    "league": "NFL",
+    "category": "championships",
+    "difficulty": 1,
+    "question": "Super Bowl 53, New England's 13-3 win over the Rams, had just one touchdown: a 2-yard run with about seven minutes left. Who scored it?",
+    "answers": [
+      "Sony Michel",
+      "Rex Burkhead",
+      "James White",
+      "Todd Gurley"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rob Gronkowski's 29-yard catch set it up at the 2, and the game remains the lowest-scoring Super Bowl ever.",
+    "source": "https://www.cbsnews.com/boston/news/patriots-sony-michel-touchdown-super-bowl-liii/"
+  },
+  {
+    "id": "d20261031-02",
+    "league": "NFL",
+    "category": "trades",
+    "difficulty": 1,
+    "question": "Oakland traded a first-round pick and a conditional second-rounder to Cincinnati for Carson Palmer in October 2011 after which Raiders starter broke his collarbone against Cleveland?",
+    "answers": [
+      "Jason Campbell",
+      "Kyle Boller",
+      "Bruce Gradkowski",
+      "Terrelle Pryor"
+    ],
+    "correctIndex": 0,
+    "explanation": "Campbell broke his right collarbone on a second-quarter run in a 24-17 win, and Kyle Boller came on in relief.",
+    "source": "https://nfl.com/_amp/done-deal-raiders-acquire-veteran-qb-palmer-from-bengals-09000d5d8233c392"
+  },
+  {
+    "id": "d20261031-03",
+    "league": "FBS",
+    "category": "iconic games",
+    "difficulty": 1,
+    "question": "In a 34-20 loss to Akron in November 2002, which Marshall quarterback played on a broken left leg and was carried to the line of scrimmage by his linemen?",
+    "answers": [
+      "Byron Leftwich",
+      "Chad Pennington",
+      "Charlie Frye",
+      "Ben Roethlisberger"
+    ],
+    "correctIndex": 0,
+    "explanation": "Linemen Steve Sciullo and Steve Perretta hauled him up the field between plays, and Leftwich went seventh overall to Jacksonville the next spring.",
+    "source": "https://www.herald-dispatch.com/sports/mu-football-top-50-moments-no-15-leftwich-returns-to-game-with-broken-leg/article_77935b4a-96c6-51e7-9f1c-8f2f297f80ca.html"
+  },
+  {
+    "id": "d20261031-04",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 2,
+    "question": "In 1998, the year before his breakout with the Rams, Kurt Warner led NFL Europe in passing yards and touchdown passes for which team?",
+    "answers": [
+      "Amsterdam Admirals",
+      "Scottish Claymores",
+      "Rhein Fire",
+      "Frankfurt Galaxy"
+    ],
+    "correctIndex": 0,
+    "explanation": "Warner threw for 2,101 yards and 15 touchdowns in Amsterdam, bridging his Arena Football days with the Iowa Barnstormers and his 1999 MVP season in St. Louis.",
+    "source": "https://www.panthers.com/news/dutch-treat-373510"
+  },
+  {
+    "id": "d20261031-05",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 2,
+    "question": "Tracy Porter's 74-yard pick-six of Peyton Manning with 3:12 left sealed New Orleans' win in Super Bowl 44. Which Colt was the pass intended for?",
+    "answers": [
+      "Reggie Wayne",
+      "Pierre Garçon",
+      "Austin Collie",
+      "Dallas Clark"
+    ],
+    "correctIndex": 0,
+    "explanation": "Porter jumped the route after studying the Colts' tendencies on film, and the return made the final 31-17.",
+    "source": "https://www.foxnews.com/sports/super-bowl-countdown-moment-no-20-porter-stuns-peyton"
+  },
+  {
+    "id": "d20261031-06",
+    "league": "FBS",
+    "category": "awards",
+    "difficulty": 2,
+    "question": "Which junior-college transfer finished runner-up in the 2002 Heisman voting after leading Iowa to an unbeaten Big Ten season?",
+    "answers": [
+      "Brad Banks",
+      "Ken Dorsey",
+      "Larry Johnson",
+      "Willis McGahee"
+    ],
+    "correctIndex": 0,
+    "explanation": "Banks drew 199 first-place votes but fell 233 points short of USC's Carson Palmer; Penn State's Larry Johnson was third.",
+    "source": "https://usctrojans.com/news/2002/12/14/Carson_Palmer_Wins_Heisman_Trophy_"
+  },
+  {
+    "id": "d20261031-07",
+    "league": "FBS",
+    "category": "records",
+    "difficulty": 2,
+    "question": "Iowa State's star back ran for 2,010 yards in 1995 and 2,185 in 1996, becoming the first in Division I-A to top that mark twice. Who was he?",
+    "answers": [
+      "Troy Davis",
+      "Byron Hanspard",
+      "Darren Davis",
+      "Ricky Williams"
+    ],
+    "correctIndex": 0,
+    "explanation": "Troy Davis finished second to Florida's Danny Wuerffel in the 1996 Heisman voting; his brother Darren also starred in the Cyclones' backfield.",
+    "source": "https://vault.si.com/vault/1996/12/02/iowa-states-troy-davis-rushes-for-2000-yards-again-a-new-boss-for-the-irish-razing-arizona"
+  },
+  {
+    "id": "d20261031-08",
+    "league": "NFL",
+    "category": "stat line",
+    "difficulty": 3,
+    "question": "Shaun Alexander set the NFL single-season record for total touchdowns at the time in his 2005 MVP season. How many did he score?",
+    "answers": [
+      "28",
+      "27",
+      "26",
+      "31"
+    ],
+    "correctIndex": 0,
+    "explanation": "His 27 rushing scores tied Priest Holmes's 2003 mark, and LaDainian Tomlinson topped both records a year later with 28 rushing and 31 total.",
+    "source": "https://profootballhof.com/news/2006/12/news-lt-chasing-td-mark"
+  },
+  {
+    "id": "d20261031-09",
+    "league": "FBS",
+    "category": "iconic games",
+    "difficulty": 3,
+    "question": "TCU held on to beat Wisconsin 21-19 in the January 2011 Rose Bowl when Scott Tolzien's tying two-point pass was batted down at the line. Which Horned Frog knocked it away?",
+    "answers": [
+      "Tank Carder",
+      "Tejay Johnson",
+      "Jerry Hughes",
+      "Wayne Daniels"
+    ],
+    "correctIndex": 0,
+    "explanation": "The linebacker leapt to deflect the throw meant for tight end Jacob Pedersen and was named defensive MVP; Andy Dalton took offensive honors.",
+    "source": "https://uwbadgers.com/news/2011/1/1/Badgers_rally_falls_short_in_21_19_Rose_Bowl_loss_to_TCU"
+  },
+  {
+    "id": "d20261031-10",
+    "league": "FBS",
+    "category": "iconic plays",
+    "difficulty": 3,
+    "question": "Iowa beat LSU 30-25 in the January 2005 Capital One Bowl on Drew Tate's 56-yard touchdown pass as time expired, Nick Saban's last game at LSU. Who caught it?",
+    "answers": [
+      "Warren Holloway",
+      "Clinton Solomon",
+      "Ed Hinkel",
+      "Scott Chandler"
+    ],
+    "correctIndex": 0,
+    "explanation": "It was the senior's first and only college touchdown; Solomon had scored on a 57-yarder on Iowa's opening drive.",
+    "source": "https://hawkeyesports.com/news/2005/01/01/iowa-30-lsu-25"
+  }
+]
