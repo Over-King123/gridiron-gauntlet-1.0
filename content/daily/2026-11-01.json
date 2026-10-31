@@ -1,0 +1,162 @@
+[
+  {
+    "id": "d20261101-01",
+    "league": "NFL",
+    "category": "trades",
+    "difficulty": 1,
+    "question": "Which quarterback went to Seattle in the March 2022 trade that sent Russell Wilson to Denver?",
+    "answers": [
+      "Drew Lock",
+      "Geno Smith",
+      "Teddy Bridgewater",
+      "Brett Rypien"
+    ],
+    "correctIndex": 0,
+    "explanation": "Seattle also got tight end Noah Fant, defensive lineman Shelby Harris and a haul of draft picks, but Geno Smith, already on the roster, won the starting job.",
+    "source": "https://www.cbssports.com/nfl/news/russell-wilson-traded-to-broncos-seahawks-agree-to-blockbuster-move-that-will-send-superstar-qb-to-denver"
+  },
+  {
+    "id": "d20261101-02",
+    "league": "FBS",
+    "category": "players and careers",
+    "difficulty": 1,
+    "question": "Trevor Lawrence lost only twice in 36 starts at Clemson. Which team handed him his first college loss?",
+    "answers": [
+      "LSU",
+      "Ohio State",
+      "Notre Dame",
+      "Alabama"
+    ],
+    "correctIndex": 0,
+    "explanation": "LSU beat Clemson 42-25 in the January 2020 national title game, and Ohio State beat Lawrence in the Sugar Bowl on the same Superdome field a year later.",
+    "source": "https://wlos.com/sports/content/clemson-star-qb-lawrence-sputters-in-superdome-again"
+  },
+  {
+    "id": "d20261101-03",
+    "league": "NFL",
+    "category": "records",
+    "difficulty": 1,
+    "question": "Drew Brees passed Peyton Manning as the NFL's career passing yards leader on Monday Night Football in October 2018 with a 62-yard touchdown. Who caught it?",
+    "answers": [
+      "Tre'Quan Smith",
+      "Michael Thomas",
+      "Alvin Kamara",
+      "Ted Ginn Jr."
+    ],
+    "correctIndex": 0,
+    "explanation": "The rookie's catch pushed Brees past Manning's 71,940 yards in a 43-19 rout of Washington.",
+    "source": "https://www.fox5dc.com/sports/drew-brees-makes-history-in-style-saints-thrash-redskins-43-19"
+  },
+  {
+    "id": "d20261101-04",
+    "league": "NFL",
+    "category": "records",
+    "difficulty": 2,
+    "question": "Peyton Manning broke Dan Marino's single-season record with his 49th touchdown pass against San Diego in December 2004. Who caught it?",
+    "answers": [
+      "Brandon Stokley",
+      "Marvin Harrison",
+      "Reggie Wayne",
+      "Dallas Clark"
+    ],
+    "correctIndex": 0,
+    "explanation": "The score came with 56 seconds left in regulation, and the Colts went on to beat the Chargers 34-31 in overtime.",
+    "source": "https://www.nfl.com/news/manning-sets-td-record-rallies-colts-past-chargers-09000d5d805cbb62"
+  },
+  {
+    "id": "d20261101-05",
+    "league": "NFL",
+    "category": "records",
+    "difficulty": 2,
+    "question": "Derrick Henry's 99-yard touchdown run against Jacksonville in December 2018 tied the NFL record for the longest run from scrimmage. Whose record did he tie?",
+    "answers": [
+      "Tony Dorsett",
+      "Ahman Green",
+      "Bo Jackson",
+      "Barry Sanders"
+    ],
+    "correctIndex": 0,
+    "explanation": "Dorsett's 99-yarder came for Dallas on Monday Night Football in 1983; Henry's came on a Thursday night, stiff-arming his way through the Jaguars.",
+    "source": "https://www.nfl.com/news/derrick-henry-ties-nfl-record-with-historic-99-yard-td-0ap3000000996734"
+  },
+  {
+    "id": "d20261101-06",
+    "league": "FBS",
+    "category": "iconic plays",
+    "difficulty": 2,
+    "question": "Pitt's Kenny Pickett faked a slide and ran 58 yards for a touchdown on the opening drive of the 2021 ACC Championship Game. Who was Pitt playing?",
+    "answers": [
+      "Wake Forest",
+      "Clemson",
+      "NC State",
+      "Virginia Tech"
+    ],
+    "correctIndex": 0,
+    "explanation": "Pitt won its first ACC title that night, and the play led the NCAA to adopt the so-called Kenny Pickett rule, treating a fake slide as a slide.",
+    "source": "https://www.cbssports.com/college-football/news/watch-pitt-qb-kenny-pickett-fakes-slide-on-incredible-58-yard-td-run-in-acc-championship-game"
+  },
+  {
+    "id": "d20261101-07",
+    "league": "FBS",
+    "category": "iconic games",
+    "difficulty": 2,
+    "question": "Before the Kick Six, Auburn tied the 2013 Iron Bowl 28-28 with 32 seconds left on a 39-yard Nick Marshall touchdown pass. Who caught it?",
+    "answers": [
+      "Sammie Coates",
+      "C.J. Uzomah",
+      "Ricardo Louis",
+      "Quan Bray"
+    ],
+    "correctIndex": 0,
+    "explanation": "Alabama had gone ahead on Amari Cooper's 99-yard catch from AJ McCarron, and C.J. Uzomah had caught Auburn's other touchdown pass in the third quarter.",
+    "source": "https://static.auburntigers.com/Stats/Football/2013/au12.htm"
+  },
+  {
+    "id": "d20261101-08",
+    "league": "NFL",
+    "category": "iconic plays",
+    "difficulty": 3,
+    "question": "In his third game with Minnesota, in September 2009, Brett Favre beat San Francisco with a 32-yard touchdown pass with two seconds left. Who caught it?",
+    "answers": [
+      "Greg Lewis",
+      "Sidney Rice",
+      "Percy Harvin",
+      "Bernard Berrian"
+    ],
+    "correctIndex": 0,
+    "explanation": "The catch gave the Vikings a 27-24 win and kept them unbeaten on the way to a 12-4 season and the NFC Championship Game.",
+    "source": "https://www.pro-football-reference.com/boxscores/200909270min.htm"
+  },
+  {
+    "id": "d20261101-09",
+    "league": "FBS",
+    "category": "iconic games",
+    "difficulty": 3,
+    "question": "USC beat Penn State 52-49 in the January 2017 Rose Bowl after a late interception of Trace McSorley set up the winning points as time expired. Which Trojan made the pick?",
+    "answers": [
+      "Leon McQuay III",
+      "Adoree' Jackson",
+      "Iman Marshall",
+      "Chris Hawkins"
+    ],
+    "correctIndex": 0,
+    "explanation": "McQuay returned it 32 yards with 27 seconds left, capping a night when Sam Darnold threw for 453 yards and five touchdowns.",
+    "source": "https://www.espn.com/college-football/recap/_/gameId/400876111"
+  },
+  {
+    "id": "d20261101-10",
+    "league": "NFL",
+    "category": "stat line",
+    "difficulty": 3,
+    "question": "Calvin Johnson torched Dallas in a 31-30 Lions win in October 2013. How many receiving yards did he finish with?",
+    "answers": [
+      "329",
+      "336",
+      "311",
+      "309"
+    ],
+    "correctIndex": 0,
+    "explanation": "He caught 14 passes and fell just seven yards short of Flipper Anderson's single-game record of 336, set in 1989.",
+    "source": "https://www.profootballhof.com/news/johnson-s-mega-day/"
+  }
+]
