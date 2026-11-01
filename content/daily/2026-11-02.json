@@ -1,0 +1,162 @@
+[
+  {
+    "id": "d20261102-01",
+    "league": "NFL",
+    "category": "stat line",
+    "difficulty": 1,
+    "question": "In 2019, the season before Tom Brady arrived, which Tampa Bay quarterback led the NFL with 5,109 passing yards while throwing 30 interceptions?",
+    "answers": [
+      "Jameis Winston",
+      "Ryan Fitzpatrick",
+      "Blaine Gabbert",
+      "Teddy Bridgewater"
+    ],
+    "correctIndex": 0,
+    "explanation": "Winston became the first player in NFL history with 30 touchdown passes and 30 interceptions in the same season, and the Bucs let him walk to sign Brady in March 2020.",
+    "source": "https://www.cbssports.com/nfl/news/jameis-winston-caps-boom-or-bust-season-by-setting-two-incredible-interception-records/"
+  },
+  {
+    "id": "d20261102-02",
+    "league": "NFL",
+    "category": "draft history",
+    "difficulty": 1,
+    "question": "Minnesota used the first-round pick it got from Buffalo in the March 2020 Stefon Diggs trade to draft which player at No. 22?",
+    "answers": [
+      "Justin Jefferson",
+      "Jeff Gladney",
+      "Brandon Aiyuk",
+      "CeeDee Lamb"
+    ],
+    "correctIndex": 0,
+    "explanation": "The Vikings had a second first-rounder that night and used No. 31 on TCU cornerback Jeff Gladney.",
+    "source": "https://www.krgv.com/news/sports-minute-vikings-draft-lsu-wr-jefferson-22nd-and-tcu-cb-gladney-31st"
+  },
+  {
+    "id": "d20261102-03",
+    "league": "NFL",
+    "category": "championships",
+    "difficulty": 1,
+    "question": "Green Bay's Super Bowl 31 win in New Orleans came against a Patriots passer who threw four interceptions that night. Who was he?",
+    "answers": [
+      "Drew Bledsoe",
+      "Tony Eason",
+      "Scott Zolak",
+      "Steve Grogan"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bledsoe, the No. 1 overall pick in 1993, was picked off four times in the 35-21 loss, and Desmond Howard's 99-yard kickoff return touchdown sealed the Packers' win.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XXXI"
+  },
+  {
+    "id": "d20261102-04",
+    "league": "NFL",
+    "category": "trades",
+    "difficulty": 2,
+    "question": "Tennessee traded A.J. Brown to Philadelphia on the first night of the 2022 draft and used the No. 18 pick it got back on which receiver?",
+    "answers": [
+      "Treylon Burks",
+      "Jahan Dotson",
+      "Chris Olave",
+      "Jameson Williams"
+    ],
+    "correctIndex": 0,
+    "explanation": "The Titans also got a third-round pick in the deal, while Brown signed a four-year, $100 million extension with the Eagles.",
+    "source": "https://www.tennesseetitans.com/news/titans-trade-a-j-brown-to-the-eagles-select-arkansas-wr-treylon-burks-in-the-fir"
+  },
+  {
+    "id": "d20261102-05",
+    "league": "NFL",
+    "category": "draft history",
+    "difficulty": 2,
+    "question": "Houston traded up from No. 25 to No. 12 to draft Deshaun Watson in 2017. Which team did it trade with?",
+    "answers": [
+      "Cleveland Browns",
+      "Buffalo Bills",
+      "San Francisco 49ers",
+      "Philadelphia Eagles"
+    ],
+    "correctIndex": 0,
+    "explanation": "Cleveland got Houston's 2018 first-round pick in the deal, and five years later it traded three first-rounders to the Texans to acquire Watson.",
+    "source": "https://www.nfl.com/news/trade-texans-move-up-grab-deshaun-watson-0ap3000000803427"
+  },
+  {
+    "id": "d20261102-06",
+    "league": "NFL",
+    "category": "draft history",
+    "difficulty": 2,
+    "question": "Which quarterback did Arizona select at No. 10 in the 2018 NFL Draft after trading up with Oakland?",
+    "answers": [
+      "Josh Rosen",
+      "Josh Allen",
+      "Sam Darnold",
+      "Mason Rudolph"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rosen lasted one season in Arizona; after the Cardinals drafted Kyler Murray first overall in 2019, they traded Rosen to Miami.",
+    "source": "https://www.cbssports.com/nfl/news/2018-nfl-draft-cardinals-steal-qb-josh-rosen-at-no-10-after-trade-with-raiders"
+  },
+  {
+    "id": "d20261102-07",
+    "league": "NFL",
+    "category": "trades",
+    "difficulty": 2,
+    "question": "In April 2007, New England acquired Randy Moss from Oakland for a draft pick in which round?",
+    "answers": [
+      "4th",
+      "1st",
+      "2nd",
+      "3rd"
+    ],
+    "correctIndex": 0,
+    "explanation": "Moss then caught an NFL-record 23 touchdown passes for the 16-0 Patriots that season.",
+    "source": "https://www.patriots.com/news/patriots-acquire-wr-moss-from-raiders-99941"
+  },
+  {
+    "id": "d20261102-08",
+    "league": "NFL",
+    "category": "stat line",
+    "difficulty": 3,
+    "question": "Nick Foles threw 27 touchdown passes for Philadelphia in 2013. How many interceptions did he throw that season?",
+    "answers": [
+      "2",
+      "4",
+      "5",
+      "7"
+    ],
+    "correctIndex": 0,
+    "explanation": "Foles posted a 119.2 passer rating, the third-highest single-season mark in NFL history at the time, behind only Aaron Rodgers and Peyton Manning.",
+    "source": "https://www.theringer.com/2018/08/13/nfl/nick-foles-philadelphia-eagles-2013-season"
+  },
+  {
+    "id": "d20261102-09",
+    "league": "NFL",
+    "category": "championships",
+    "difficulty": 3,
+    "question": "Jalen Hurts lost a second-quarter fumble against Kansas City in Super Bowl 57. Who scooped it up and ran it back 36 yards for a Chiefs touchdown?",
+    "answers": [
+      "Nick Bolton",
+      "Willie Gay",
+      "Leo Chenal",
+      "Frank Clark"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bolton's second-quarter score tied the game 14-14, and the Chiefs went on to win 38-35 on a late Harrison Butker field goal.",
+    "source": "https://www.nfl.com/videos/can-t-miss-play-nick-bolton-races-36-yards-to-pay-dirt-on-scoop-and-score-td"
+  },
+  {
+    "id": "d20261102-10",
+    "league": "NFL",
+    "category": "stat line",
+    "difficulty": 3,
+    "question": "In his first season with New England in 2007, Wes Welker tied for the NFL lead in receptions. How many catches did he make?",
+    "answers": [
+      "112",
+      "98",
+      "105",
+      "123"
+    ],
+    "correctIndex": 0,
+    "explanation": "Welker shared the league lead with Cincinnati's T.J. Houshmandzadeh, who also caught 112 passes.",
+    "source": "https://www.pro-football-reference.com/years/2007/receiving.htm"
+  }
+]
