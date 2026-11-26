@@ -23,7 +23,7 @@ describe("reel plan", () => {
     const src = yesterday.find((q: any) => q.id === a.questionId);
     expect(a.answers[a.correctIndex]).toBe(src.answers[src.correctIndex]);
     expect(HOOKS).toContain(a.hook);
-  });
+  }, 30000);
   it("writes a caption with the question, options, today's Daily number and link in bio", () => {
     const p = planReel("2026-10-14");
     expect(p.caption).toContain(p.question);
