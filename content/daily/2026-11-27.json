@@ -1,0 +1,192 @@
+[
+  {
+    "id": "d20261127-01",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 1,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Days after signing Peyton Manning in March 2012, Denver traded Tim Tebow, the starter who had just won a playoff game for the Broncos. Which team acquired him?",
+    "answers": [
+      "New York Jets",
+      "Jacksonville Jaguars",
+      "New England Patriots",
+      "Philadelphia Eagles"
+    ],
+    "correctIndex": 0,
+    "explanation": "The Jets sent fourth- and sixth-round picks for Tebow, who threw just eight passes in his only season in New York.",
+    "source": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jets-acquire-tim-tebow-from-broncos-for-fourth-round-pick"
+  },
+  {
+    "id": "d20261127-02",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 1,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Justin Herbert got his first NFL start in Week 2 of 2020 against Kansas City only after a Chargers team doctor accidentally punctured which quarterback's lung before kickoff?",
+    "answers": [
+      "Tyrod Taylor",
+      "Philip Rivers",
+      "Easton Stick",
+      "Chase Daniel"
+    ],
+    "correctIndex": 0,
+    "explanation": "The doctor punctured Taylor's lung while giving him a pain-killing injection for injured ribs. Herbert never gave the job back and was named Offensive Rookie of the Year.",
+    "source": "https://www.cbssports.com/nfl/news/tyrod-taylor-injury-chargers-team-doctor-punctured-qbs-lung-before-game-per-report"
+  },
+  {
+    "id": "d20261127-03",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 1,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Which Kansas City running back led the NFL in rushing as a rookie in 2017?",
+    "answers": [
+      "Kareem Hunt",
+      "Spencer Ware",
+      "Charcandrick West",
+      "Leonard Fournette"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hunt ran for 1,327 yards on 272 carries after Spencer Ware's preseason knee injury opened the starting job.",
+    "source": "https://www.chiefs.com/news/kareem-hunt-polishes-offensive-rookie-of-the-year-resume-with-rushing-t-20179487"
+  },
+  {
+    "id": "d20261127-04",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 2,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "With Derek Carr's leg broken and Matt McGloin's shoulder hurt, which rookie started for Oakland in the January 2017 wild-card game at Houston?",
+    "answers": [
+      "Connor Cook",
+      "Christian Hackenberg",
+      "Cardale Jones",
+      "EJ Manuel"
+    ],
+    "correctIndex": 0,
+    "explanation": "Cook became the first quarterback of the Super Bowl era to make his first career start in a playoff game. Houston won 27-14.",
+    "source": "https://www.espn.com/nfl/story/_/id/18407199/oakland-raiders-start-rookie-connor-cook-qb-vs-houston-texans"
+  },
+  {
+    "id": "d20261127-05",
+    "league": "NFL",
+    "category": "big games",
+    "difficulty": 2,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Who led Denver in rushing in its 24-10 win over Carolina in Super Bowl 50?",
+    "answers": [
+      "C.J. Anderson",
+      "Ronnie Hillman",
+      "Juwan Thompson",
+      "Peyton Manning"
+    ],
+    "correctIndex": 0,
+    "explanation": "Anderson ran 23 times for 90 yards and scored the clinching 2-yard touchdown late in the fourth quarter. Ronnie Hillman managed 0 yards on five carries.",
+    "source": "https://www.pro-football-reference.com/super-bowl/l.htm"
+  },
+  {
+    "id": "d20261127-06",
+    "league": "NFL",
+    "category": "big games",
+    "difficulty": 2,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Late in the January 2019 AFC Championship Game, Dee Ford's offside penalty wiped out an interception of a Tom Brady pass meant for Rob Gronkowski. Which Chiefs defensive back had made the pick?",
+    "answers": [
+      "Charvarius Ward",
+      "Eric Berry",
+      "Steven Nelson",
+      "Kendall Fuller"
+    ],
+    "correctIndex": 0,
+    "explanation": "The interception would have clinched a 28-24 Kansas City win. Instead New England scored to go ahead and won 37-31 in overtime.",
+    "source": "https://sports.yahoo.com/dee-fords-brutal-offsides-penalty-overturned-int-will-go-sad-chiefs-lore-044412308.html"
+  },
+  {
+    "id": "d20261127-07",
+    "league": "NFL",
+    "category": "big games",
+    "difficulty": 2,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "San Francisco routed San Diego 49-26 in Super Bowl 29, the Chargers' only Super Bowl trip. Which quarterback threw 49 passes for the Chargers that day?",
+    "answers": [
+      "Stan Humphries",
+      "Gale Gilbert",
+      "John Friesz",
+      "Jim Harbaugh"
+    ],
+    "correctIndex": 0,
+    "explanation": "Humphries threw for 275 yards. Backup Gale Gilbert also saw action while Humphries was hurt and threw an interception to Deion Sanders.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XXIX"
+  },
+  {
+    "id": "d20261127-08",
+    "league": "NFL",
+    "category": "big games",
+    "difficulty": 3,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Oakland's Pro Bowl center Barret Robbins went missing the day before Super Bowl 37 and was left out of the game. Which former Nebraska walk-on started at center in his place?",
+    "answers": [
+      "Adam Treu",
+      "Frank Middleton",
+      "Mo Collins",
+      "Steve Wisniewski"
+    ],
+    "correctIndex": 0,
+    "explanation": "Treu, normally a backup and long snapper, started against Tampa Bay, which won 48-21. Robbins was later diagnosed with bipolar disorder.",
+    "source": "https://en.wikipedia.org/wiki/Adam_Treu"
+  },
+  {
+    "id": "d20261127-09",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 3,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Darren Sproles won San Diego's January 2009 wild-card game against Indianapolis with a 22-yard overtime touchdown run. How many all-purpose yards did he finish with?",
+    "answers": [
+      "328",
+      "264",
+      "305",
+      "351"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sproles piled up his yards on runs, catches and returns as the Chargers won 23-17 to knock out the Colts for the second straight postseason.",
+    "source": "https://www.nfl.com/news/sproles-big-day-lifts-chargers-over-colts-in-overtime-09000d5d80ddc33a"
+  },
+  {
+    "id": "d20261127-10",
+    "league": "NFL",
+    "category": "players and careers",
+    "difficulty": 3,
+    "tags": [
+      "AFC West"
+    ],
+    "question": "Derrick Thomas set an NFL record with seven sacks in a November 1990 game, yet Kansas City still lost 17-16 to Seattle. Which quarterback did he sack all seven times?",
+    "answers": [
+      "Dave Krieg",
+      "Kelly Stouffer",
+      "Jeff Kemp",
+      "Warren Moon"
+    ],
+    "correctIndex": 0,
+    "explanation": "Krieg escaped what would have been an eighth sack on the final play and threw the winning touchdown to Paul Skansi.",
+    "source": "https://en.wikipedia.org/wiki/1990_Seattle_Seahawks_season"
+  }
+]
