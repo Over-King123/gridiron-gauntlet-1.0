@@ -1,0 +1,162 @@
+[
+  {
+    "id": "d20261128-01",
+    "league": "NFL",
+    "category": "super bowl",
+    "difficulty": 1,
+    "question": "With New England up 10-3 and 4:17 left in Super Bowl 53, which Patriots cornerback intercepted Jared Goff?",
+    "answers": [
+      "Stephon Gilmore",
+      "J.C. Jackson",
+      "Jason McCourty",
+      "Duron Harmon"
+    ],
+    "correctIndex": 0,
+    "explanation": "Gilmore's pick snuffed out the Rams' best drive, and New England's 13-3 win remains the lowest-scoring Super Bowl ever played.",
+    "source": "https://www.cbssports.com/nfl/news/2019-super-bowl-stephon-gilmore-and-patriots-defense-dominates-high-powered-rams"
+  },
+  {
+    "id": "d20261128-02",
+    "league": "NFL",
+    "category": "iconic games",
+    "difficulty": 1,
+    "question": "Minnesota rallied from 33-0 down at halftime to beat Indianapolis 39-36 in overtime in December 2022, the largest comeback in NFL history. Who started at quarterback for the Colts?",
+    "answers": [
+      "Matt Ryan",
+      "Nick Foles",
+      "Sam Ehlinger",
+      "Carson Wentz"
+    ],
+    "correctIndex": 0,
+    "explanation": "Ryan, who had also been on the losing end of the 28-3 collapse in Super Bowl 51, watched Kirk Cousins top the Bills' 32-point rally against Houston from January 1993.",
+    "source": "https://www.cbsnews.com/minnesota/news/matt-ryan-on-wrong-side-of-history-again-in-colts-loss-to-vikings-tough-one-to-swallow"
+  },
+  {
+    "id": "d20261128-03",
+    "league": "FBS",
+    "category": "big games",
+    "difficulty": 1,
+    "question": "Cincinnati became the first team from outside the Power 5 to make the College Football Playoff after the 2021 season. Which team beat the Bearcats 27-6 in the Cotton Bowl semifinal?",
+    "answers": [
+      "Alabama",
+      "Georgia",
+      "Michigan",
+      "Notre Dame"
+    ],
+    "correctIndex": 0,
+    "explanation": "Desmond Ridder's Bearcats arrived unbeaten, having won at Notre Dame that October, but Bryce Young and Alabama held them without a touchdown.",
+    "source": "https://www.espn.com/college-football/story/_/id/32970176/no-1-alabama-advances-college-football-playoff-title-game-27-6-win-no-4-cincinnati-goodyear-cotton-bowl-classic"
+  },
+  {
+    "id": "d20261128-04",
+    "league": "NFL",
+    "category": "super bowl",
+    "difficulty": 2,
+    "question": "Brandon Graham's fourth-quarter strip-sack of Tom Brady helped seal Philadelphia's win in Super Bowl 52. Which Eagles rookie recovered the fumble?",
+    "answers": [
+      "Derek Barnett",
+      "Fletcher Cox",
+      "Chris Long",
+      "Vinny Curry"
+    ],
+    "correctIndex": 0,
+    "explanation": "Barnett, a 2017 first-round pick out of Tennessee, fell on the ball after the Eagles' first sack of the night, preserving a lead in the Eagles' 41-33 win.",
+    "source": "https://www.cbsnews.com/boston/news/good-sport-tom-brady-congratulates-derek-barnett-eagles-super-bowl-lii"
+  },
+  {
+    "id": "d20261128-05",
+    "league": "NFL",
+    "category": "draft history",
+    "difficulty": 2,
+    "question": "Buffalo spent the No. 16 pick on a passer in April 2013, and no other team took a quarterback until Round 2. Whom did the Bills draft?",
+    "answers": [
+      "EJ Manuel",
+      "Geno Smith",
+      "Matt Barkley",
+      "Ryan Nassib"
+    ],
+    "correctIndex": 0,
+    "explanation": "Buffalo surprised many by taking the Florida State passer at No. 16, while Geno Smith slid into the second round to the Jets.",
+    "source": "https://nfl.com/news/ej-manuel-a-surprise-pick-by-buffalo-bills-at-no-16-0ap1000000163624"
+  },
+  {
+    "id": "d20261128-06",
+    "league": "FBS",
+    "category": "big games",
+    "difficulty": 2,
+    "question": "Michigan beat Alabama 27-20 in overtime of the January 2024 Rose Bowl semifinal by stuffing a fourth-and-goal draw from the 3-yard line. Which Alabama player carried the ball?",
+    "answers": [
+      "Jalen Milroe",
+      "Jase McClellan",
+      "Roydell Williams",
+      "Jam Miller"
+    ],
+    "correctIndex": 0,
+    "explanation": "Alabama called a quarterback draw for Milroe, and Michigan's Josaiah Stewart led the stop after Blake Corum's 17-yard touchdown run had opened overtime.",
+    "source": "https://www.ksl.com/article/50832408/jalen-milroe-nearly-rallies-alabama-back-but-falls-2-yards-short-in-ot-against-michigan"
+  },
+  {
+    "id": "d20261128-07",
+    "league": "FBS",
+    "category": "big games",
+    "difficulty": 2,
+    "question": "Texas survived Arizona State 39-31 in double overtime of the January 2025 Peach Bowl quarterfinal when which Longhorns safety intercepted Sam Leavitt?",
+    "answers": [
+      "Andrew Mukuba",
+      "Michael Taaffe",
+      "Jahdae Barron",
+      "Derek Williams Jr."
+    ],
+    "correctIndex": 0,
+    "explanation": "Mukuba undercut a throw meant for Melquan Stovall, ending the Sun Devils' comeback bid and sending Texas to the semifinals.",
+    "source": "https://texaslonghorns.com/news/2025/1/2/the-pick-mukubas-interceptions-sends-no-3-football-into-the-cfp-semifinals"
+  },
+  {
+    "id": "d20261128-08",
+    "league": "NFL",
+    "category": "records",
+    "difficulty": 3,
+    "question": "Puka Nacua set the NFL rookie receiving yards record in the final week of the 2023 season. Whose mark of 1,473 yards did he pass?",
+    "answers": [
+      "Bill Groman",
+      "Ja'Marr Chase",
+      "Justin Jefferson",
+      "Anquan Boldin"
+    ],
+    "correctIndex": 0,
+    "explanation": "Groman's record had stood since 1960, when he caught passes for the AFL's Houston Oilers; Nacua also broke Jaylen Waddle's rookie catches mark that same day.",
+    "source": "https://www.nfl.com/news/rams-wr-puka-nacua-sets-new-rookie-record-for-receiving-yards-receptions"
+  },
+  {
+    "id": "d20261128-09",
+    "league": "FBS",
+    "category": "records",
+    "difficulty": 3,
+    "question": "Bo Nix ended his college career at Oregon in January 2024 with the most starts by a quarterback in NCAA history at the time. How many games had he started?",
+    "answers": [
+      "61",
+      "54",
+      "57",
+      "64"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nix made 61 starts across three seasons at Auburn and two at Oregon; his 54th had passed the old mark held by Colt McCoy and Kellen Moore.",
+    "source": "https://en.wikipedia.org/wiki/Bo_Nix"
+  },
+  {
+    "id": "d20261128-10",
+    "league": "FBS",
+    "category": "stat line",
+    "difficulty": 3,
+    "question": "Jaxon Smith-Njigba caught 15 passes and three touchdowns in Ohio State's 48-45 Rose Bowl win over Utah in January 2022. How many receiving yards did he finish with, an FBS bowl record?",
+    "answers": [
+      "347",
+      "316",
+      "289",
+      "372"
+    ],
+    "correctIndex": 0,
+    "explanation": "His 347 yards were the most in any FBS bowl game and the most in a single game in Ohio State history, shattering Keyshawn Johnson's Rose Bowl mark of 216.",
+    "source": "https://www.cbssports.com/college-football/news/jaxon-smith-njigba-sets-fbs-bowl-game-multiple-ohio-state-records-with-insane-2022-rose-bowl-performance"
+  }
+]
